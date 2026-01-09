@@ -66,144 +66,107 @@
             flex-direction: column;
         }
 
-        /* Header */
-        header {
-            padding: 16px 20px;
+        /* Header Banner */
+        .header-banner {
+            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            padding: 14px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            background: rgba(253, 252, 248, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            border-bottom: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            box-shadow: 
+                0 4px 16px rgba(201, 154, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
         }
 
         .logo-mark {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(145deg, #E8B800, #C99A00);
-            border-radius: 11px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px var(--accent-glow);
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .logo-mark:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-mark:active {
-            transform: scale(0.95);
         }
 
         .logo-mark svg {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             fill: white;
         }
 
         .logo-text {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #C99A00 0%, #A67C00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
+            color: white;
+            letter-spacing: -0.01em;
         }
 
-        /* Info button */
-        .info-btn {
+        .banner-info-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 32px;
             height: 32px;
             border: none;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
+            color: white;
             transition: all 0.2s;
-            position: relative;
         }
 
-        .info-btn:hover {
-            background: var(--accent-light);
-            color: var(--accent);
+        .banner-info-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
         }
 
-        .info-tooltip {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            width: 320px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
-            text-align: left;
+        .banner-info-btn svg {
+            width: 18px;
+            height: 18px;
         }
 
-        .info-tooltip.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .info-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 24px;
-            border: 8px solid transparent;
-            border-bottom-color: white;
-            border-top: none;
-        }
-
-        .info-tooltip p {
-            font-size: 0.8rem;
-            line-height: 1.6;
-            color: var(--text-soft);
-            margin-bottom: 12px;
-        }
-
-        .info-tooltip p:last-child {
-            margin-bottom: 0;
-        }
-
-        .info-tooltip p strong {
-            color: var(--text);
-            font-weight: 600;
+        /* Navigation Bar */
+        .nav-bar {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            background: rgba(253, 252, 248, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         .nav {
             display: flex;
-            gap: 2px;
-            background: rgba(0, 0, 0, 0.04);
+            gap: 4px;
+            background: var(--bg-card);
             padding: 4px;
-            border-radius: 14px;
+            border-radius: 12px;
         }
 
         .nav-btn {
-            padding: 10px 18px;
+            padding: 10px 24px;
             border: none;
             background: transparent;
             border-radius: 10px;
@@ -227,6 +190,56 @@
 
         .nav-btn:active {
             transform: scale(0.97);
+        }
+
+        /* Info Tooltip */
+        .info-tooltip {
+            position: absolute;
+            top: 100%;
+            right: 16px;
+            margin-top: 8px;
+            width: 300px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            text-align: left;
+        }
+
+        .info-tooltip.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .info-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 20px;
+            border: 8px solid transparent;
+            border-bottom-color: white;
+            border-top: none;
+        }
+
+        .info-tooltip p {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+            margin-bottom: 12px;
+        }
+
+        .info-tooltip p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-tooltip p strong {
+            color: var(--text);
+            font-weight: 600;
         }
 
         /* Views */
@@ -577,6 +590,23 @@
 
         .recipient-confirm:hover {
             background: var(--accent-hover);
+        }
+
+        .recipient-name-display {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: var(--accent-light);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .recipient-name-display.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         /* Controls */
@@ -1021,7 +1051,8 @@
         .day-count {
             position: absolute;
             bottom: 2px;
-            right: 4px;
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 0.6rem;
             color: var(--accent);
             font-weight: 700;
@@ -1465,34 +1496,35 @@
 </head>
 <body>
     <div class="app">
-        <header>
-            <div class="logo" id="logo-home" style="cursor: pointer;">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div class="logo" id="logo-home">
                 <div class="logo-mark">
                     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </div>
                 <span class="logo-text">Hartmeditatie</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <nav class="nav">
-                    <button class="nav-btn active" data-view="meditate">Mediteer</button>
-                    <button class="nav-btn" data-view="calendar">Kalender</button>
-                </nav>
-                <div style="position: relative;">
-                    <button class="info-btn" id="info-btn" title="Over deze app">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    </button>
-                    <div class="info-tooltip" id="info-tooltip">
-                        <p>Deze oefening is geïnspireerd door de boeddhistische metta meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
-                        
-                        <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
-                        
-                        <p><strong>Disclaimer:</strong> Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
-                        
-                        <p style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.75rem;"><a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Contact</a></p>
-                    </div>
-                </div>
+            <button class="banner-info-btn" id="info-btn" title="Over deze app">
+                <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <div class="info-tooltip" id="info-tooltip">
+                <p>Deze oefening is geïnspireerd door de boeddhistische metta meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
+                
+                <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
+                
+                <p><strong>Disclaimer:</strong> Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
+                
+                <p style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.75rem;"><a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Contact</a></p>
             </div>
-        </header>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <nav class="nav">
+                <button class="nav-btn active" data-view="meditate">Mediteer</button>
+                <button class="nav-btn" data-view="calendar">Kalender</button>
+            </nav>
+        </div>
 
         <!-- Meditate View -->
         <div id="meditate-view" class="view active">
@@ -1542,6 +1574,7 @@
                             <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam...">
                             <button class="recipient-confirm" id="recipient-confirm">OK</button>
                         </div>
+                        <div class="recipient-name-display" id="recipient-name-display"></div>
                     </div>
                 </div>
             </div>
@@ -1767,7 +1800,7 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.info-btn') && !e.target.closest('.info-tooltip')) {
+            if (!e.target.closest('.banner-info-btn') && !e.target.closest('.info-tooltip')) {
                 $('info-tooltip').classList.remove('visible');
             }
         });
@@ -1781,11 +1814,14 @@
                 chip.classList.add('active');
                 
                 if (recipient === 'other') {
+                    $('recipient-name-display').classList.remove('visible');
                     $('recipient-custom').classList.add('visible');
                     $('recipient-input').focus();
                 } else {
                     $('recipient-custom').classList.remove('visible');
+                    $('recipient-name-display').classList.remove('visible');
                     STATE.recipient = 'ik';
+                    STATE.customRecipient = '';
                     showIntention(STATE.currentIntention);
                 }
             });
@@ -1802,6 +1838,9 @@
             if (name) {
                 STATE.recipient = name;
                 STATE.customRecipient = name;
+                $('recipient-custom').classList.remove('visible');
+                $('recipient-name-display').textContent = name;
+                $('recipient-name-display').classList.add('visible');
                 showIntention(STATE.currentIntention);
             }
         }
@@ -1825,8 +1864,8 @@
 
         function toggleMeditation() {
             if (STATE.isMeditating) {
-                // Als al bezig: reset en herstart
-                restartMeditation();
+                // Als al bezig: skip (stop zonder opslaan)
+                skipMeditation();
             } else {
                 startMeditation();
             }
@@ -1838,8 +1877,8 @@
             STATE.currentIntention = 0;
 
             $('start-btn').innerHTML = `
-                <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-                Opnieuw
+                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                Skip
             `;
             
             $('heart-icon').style.display = 'none';
@@ -1880,44 +1919,50 @@
             }, 1000);
         }
 
-        function restartMeditation() {
-            // Stop huidige timers
+        function skipMeditation() {
+            // Stop huidige sessie zonder opslaan
+            STATE.isMeditating = false;
             clearInterval(STATE.timer);
             clearInterval(STATE.breathTimer);
             
-            // Reset state en start opnieuw
-            STATE.remaining = STATE.duration;
-            STATE.currentIntention = 0;
-            
-            // Reset progress ring
+            // Reset alles naar beginstaat
+            $('heart-icon').style.display = 'block';
+            $('breath-phase').style.display = 'none';
             $('ring-progress').style.strokeDashoffset = '0';
             $('ring-progress').style.opacity = '1';
+            $('recipient-section').style.opacity = '1';
+            $('recipient-section').style.pointerEvents = 'auto';
+            $('breath-circle').classList.remove('active');
             
-            // Herstart ademhaling vanaf begin
-            STATE.breathStartTime = Date.now();
+            // Reset breath circle styles
+            const circle = $('breath-circle');
+            circle.style.transform = '';
+            circle.style.background = '';
+            circle.style.boxShadow = '';
+            
+            // Reset recipient keuze
+            $$('.recipient-chip').forEach(c => c.classList.remove('active'));
+            $$('.recipient-chip')[0].classList.add('active');
+            STATE.recipient = 'ik';
+            STATE.customRecipient = '';
+            $('recipient-custom').classList.remove('visible');
+            $('recipient-input').value = '';
+            $('recipient-name-display').classList.remove('visible');
+            
+            STATE.currentIntention = 0;
+            STATE.remaining = STATE.duration;
             showIntention(0);
             updateDots();
-            updateBreathPhase();
-            updateProgressRing();
+            
+            $('start-btn').innerHTML = `
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                Start
+            `;
 
-            STATE.breathTimer = setInterval(() => {
-                updateBreathPhase();
-                updateProgressRing();
-            }, 50);
-
-            STATE.timer = setInterval(() => {
-                STATE.remaining--;
-
-                const newIntention = Math.floor((STATE.duration - STATE.remaining) / 30) % 4;
-                if (newIntention !== STATE.currentIntention) {
-                    STATE.currentIntention = newIntention;
-                    transitionIntention(newIntention);
-                }
-
-                if (STATE.remaining <= 0) {
-                    completeMeditation();
-                }
-            }, 1000);
+            document.querySelector('.meditation-view').style.display = 'flex';
+            document.querySelector('.controls').style.display = 'flex';
+            $('rating-view').classList.remove('active');
+            $('success-view').classList.remove('active');
         }
 
         function completeMeditation() {
@@ -1955,6 +2000,15 @@
             circle.style.transform = '';
             circle.style.background = '';
             circle.style.boxShadow = '';
+            
+            // Reset recipient keuze
+            $$('.recipient-chip').forEach(c => c.classList.remove('active'));
+            $$('.recipient-chip')[0].classList.add('active');
+            STATE.recipient = 'ik';
+            STATE.customRecipient = '';
+            $('recipient-custom').classList.remove('visible');
+            $('recipient-input').value = '';
+            $('recipient-name-display').classList.remove('visible');
             
             STATE.currentIntention = 0;
             STATE.remaining = STATE.duration;
