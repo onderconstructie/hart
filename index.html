@@ -1470,10 +1470,10 @@
                         
                         <p>Onderzoek naar loving-kindness meditatie suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
                         
-                        <p>Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
+                        <p><strong>Disclaimer:</strong> Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
                     </div>
                 </div>
-                <span class="logo-text">Hartmeditatie</span>
+                <span class="logo-text" id="logo-text" style="cursor: pointer;">Hartmeditatie</span>
             </div>
             <nav class="nav">
                 <button class="nav-btn active" data-view="meditate">Mediteer</button>
@@ -1742,6 +1742,14 @@
         $('logo-mark').addEventListener('click', (e) => {
             e.stopPropagation();
             $('logo-tooltip').classList.toggle('visible');
+        });
+
+        // Logo text click - ga naar mediteer
+        $('logo-text').addEventListener('click', () => {
+            $$('.nav-btn').forEach(b => b.classList.remove('active'));
+            $$('.nav-btn')[0].classList.add('active');
+            $$('.view').forEach(v => v.classList.remove('active'));
+            $('meditate-view').classList.add('active');
         });
 
         document.addEventListener('click', (e) => {
