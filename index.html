@@ -115,11 +115,42 @@
             fill: white;
         }
 
-        .logo-tooltip {
+        .logo-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #C99A00 0%, #A67C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        /* Info button */
+        .info-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .info-btn:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .info-tooltip {
             position: absolute;
-            top: calc(100% + 12px);
-            left: 0;
-            width: 340px;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 320px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -132,79 +163,35 @@
             text-align: left;
         }
 
-        .logo-tooltip.visible {
+        .info-tooltip.visible {
             opacity: 1;
             visibility: visible;
         }
 
-        .logo-tooltip::before {
+        .info-tooltip::before {
             content: '';
             position: absolute;
             top: -8px;
-            left: 16px;
+            right: 24px;
             border: 8px solid transparent;
             border-bottom-color: white;
             border-top: none;
         }
 
-        .logo-tooltip h4 {
-            display: none;
-        }
-
-        .logo-tooltip p {
+        .info-tooltip p {
             font-size: 0.8rem;
             line-height: 1.6;
             color: var(--text-soft);
             margin-bottom: 12px;
         }
 
-        .logo-tooltip p strong {
+        .info-tooltip p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-tooltip p strong {
             color: var(--text);
             font-weight: 600;
-        }
-
-        .logo-tooltip .section-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin: 16px 0 8px 0;
-        }
-
-        .logo-tooltip .section-title:first-of-type {
-            margin-top: 0;
-        }
-
-        .logo-tooltip ul {
-            font-size: 0.78rem;
-            line-height: 1.6;
-            color: var(--text-soft);
-            margin-left: 16px;
-            margin-bottom: 12px;
-        }
-
-        .logo-tooltip ul li {
-            margin-bottom: 4px;
-        }
-
-        .logo-tooltip .source {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-            margin-top: 12px;
-            line-height: 1.4;
-        }
-
-        .logo-text {
-            font-size: 1.05rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #C99A00 0%, #A67C00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
         }
 
         .nav {
@@ -234,7 +221,12 @@
         }
 
         .nav-btn:hover:not(.active) {
-            color: var(--text);
+            color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
         }
 
         /* Views */
@@ -592,6 +584,7 @@
             padding: 20px 24px 36px;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         .btn {
@@ -648,6 +641,18 @@
         .btn-secondary:hover {
             border-color: var(--accent);
             background: var(--accent-light);
+        }
+
+        .btn-icon-only {
+            min-width: 52px;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .btn-icon-only svg {
+            fill: var(--accent);
         }
 
         .btn svg {
@@ -1461,24 +1466,32 @@
 <body>
     <div class="app">
         <header>
-            <div class="logo">
-                <div class="logo-mark" id="logo-mark">
+            <div class="logo" id="logo-home" style="cursor: pointer;">
+                <div class="logo-mark">
                     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    <div class="logo-tooltip" id="logo-tooltip">
-                        <h4></h4>
+                </div>
+                <span class="logo-text">Hartmeditatie</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <nav class="nav">
+                    <button class="nav-btn active" data-view="meditate">Mediteer</button>
+                    <button class="nav-btn" data-view="calendar">Kalender</button>
+                </nav>
+                <div style="position: relative;">
+                    <button class="info-btn" id="info-btn" title="Over deze app">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="info-tooltip" id="info-tooltip">
                         <p>Deze oefening is geïnspireerd door de boeddhistische metta meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
                         
-                        <p>Onderzoek naar loving-kindness meditatie suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
+                        <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
                         
                         <p><strong>Disclaimer:</strong> Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
+                        
+                        <p style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.75rem;"><a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Contact</a></p>
                     </div>
                 </div>
-                <span class="logo-text" id="logo-text" style="cursor: pointer;">Hartmeditatie</span>
             </div>
-            <nav class="nav">
-                <button class="nav-btn active" data-view="meditate">Mediteer</button>
-                <button class="nav-btn" data-view="calendar">Kalender</button>
-            </nav>
         </header>
 
         <!-- Meditate View -->
@@ -1687,7 +1700,7 @@
                 <!-- Content will be dynamically inserted -->
             </div>
             
-            <button class="btn btn-secondary" id="analytics-close">Sluiten</button>
+            <button class="btn btn-secondary" id="analytics-close" style="margin-top: 24px;">Sluiten</button>
         </div>
     </div>
 
@@ -1739,22 +1752,23 @@
         }
 
         // Logo tooltip
-        $('logo-mark').addEventListener('click', (e) => {
-            e.stopPropagation();
-            $('logo-tooltip').classList.toggle('visible');
-        });
-
-        // Logo text click - ga naar mediteer
-        $('logo-text').addEventListener('click', () => {
+        // Logo click - ga naar home
+        $('logo-home').addEventListener('click', () => {
             $$('.nav-btn').forEach(b => b.classList.remove('active'));
             $$('.nav-btn')[0].classList.add('active');
             $$('.view').forEach(v => v.classList.remove('active'));
             $('meditate-view').classList.add('active');
         });
 
+        // Info button - toggle tooltip
+        $('info-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            $('info-tooltip').classList.toggle('visible');
+        });
+
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.logo-mark')) {
-                $('logo-tooltip').classList.remove('visible');
+            if (!e.target.closest('.info-btn') && !e.target.closest('.info-tooltip')) {
+                $('info-tooltip').classList.remove('visible');
             }
         });
 
@@ -1811,7 +1825,8 @@
 
         function toggleMeditation() {
             if (STATE.isMeditating) {
-                pauseMeditation();
+                // Als al bezig: reset en herstart
+                restartMeditation();
             } else {
                 startMeditation();
             }
@@ -1823,8 +1838,8 @@
             STATE.currentIntention = 0;
 
             $('start-btn').innerHTML = `
-                <svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                Pauze
+                <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                Opnieuw
             `;
             
             $('heart-icon').style.display = 'none';
@@ -1865,15 +1880,44 @@
             }, 1000);
         }
 
-        function pauseMeditation() {
-            STATE.isMeditating = false;
+        function restartMeditation() {
+            // Stop huidige timers
             clearInterval(STATE.timer);
             clearInterval(STATE.breathTimer);
-            $('start-btn').innerHTML = `
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Hervat
-            `;
-            $('breath-circle').classList.remove('active');
+            
+            // Reset state en start opnieuw
+            STATE.remaining = STATE.duration;
+            STATE.currentIntention = 0;
+            
+            // Reset progress ring
+            $('ring-progress').style.strokeDashoffset = '0';
+            $('ring-progress').style.opacity = '1';
+            
+            // Herstart ademhaling vanaf begin
+            STATE.breathStartTime = Date.now();
+            showIntention(0);
+            updateDots();
+            updateBreathPhase();
+            updateProgressRing();
+
+            STATE.breathTimer = setInterval(() => {
+                updateBreathPhase();
+                updateProgressRing();
+            }, 50);
+
+            STATE.timer = setInterval(() => {
+                STATE.remaining--;
+
+                const newIntention = Math.floor((STATE.duration - STATE.remaining) / 30) % 4;
+                if (newIntention !== STATE.currentIntention) {
+                    STATE.currentIntention = newIntention;
+                    transitionIntention(newIntention);
+                }
+
+                if (STATE.remaining <= 0) {
+                    completeMeditation();
+                }
+            }, 1000);
         }
 
         function completeMeditation() {
@@ -1893,12 +1937,18 @@
         }
 
         function resetMeditation() {
+            // Stop timers als ze lopen
+            STATE.isMeditating = false;
+            clearInterval(STATE.timer);
+            clearInterval(STATE.breathTimer);
+            
             $('heart-icon').style.display = 'block';
             $('breath-phase').style.display = 'none';
             $('ring-progress').style.strokeDashoffset = '0';
             $('ring-progress').style.opacity = '1';
             $('recipient-section').style.opacity = '1';
             $('recipient-section').style.pointerEvents = 'auto';
+            $('breath-circle').classList.remove('active');
             
             // Reset breath circle styles
             const circle = $('breath-circle');
@@ -1907,6 +1957,7 @@
             circle.style.boxShadow = '';
             
             STATE.currentIntention = 0;
+            STATE.remaining = STATE.duration;
             showIntention(0);
             updateDots();
             
@@ -2317,9 +2368,9 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 8px; margin-top: 16px;">
-                    <button class="btn btn-secondary" style="flex: 1; min-width: auto;" onclick="showAnalytics('sessions')">Alle sessies</button>
-                    <button class="btn btn-secondary" style="flex: 1; min-width: auto;" onclick="showAnalytics('streaks')">Streaks</button>
+                <div style="display: flex; gap: 16px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);">
+                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" onclick="showAnalytics('sessions')">Alle sessies</button>
+                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" onclick="showAnalytics('streaks')">Streaks</button>
                 </div>
             `;
         }
