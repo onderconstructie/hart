@@ -288,6 +288,22 @@
                 0 15px 34px rgba(212, 160, 0, 0.032);
             transform: scale(0.7);
             transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .breath-circle:hover {
+            box-shadow: 
+                0 0 0 1px rgba(212, 160, 0, 0.08),
+                0 15px 40px rgba(212, 160, 0, 0.08);
+        }
+
+        .breath-circle:focus {
+            outline: none;
+        }
+
+        .breath-circle:focus-visible {
+            outline: none;
         }
 
         .breath-circle.active {
@@ -1492,6 +1508,27 @@
             height: 24px;
             fill: var(--accent);
         }
+
+        /* Pause indicator */
+        .pause-indicator {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 6px;
+        }
+
+        .pause-indicator.visible {
+            display: flex;
+        }
+
+        .pause-bar {
+            width: 8px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -1530,7 +1567,7 @@
         <div id="meditate-view" class="view active">
             <div class="meditation-view">
                 <div class="meditation-stage">
-                    <div class="breath-circle" id="breath-circle">
+                    <div class="breath-circle" id="breath-circle" tabindex="-1">
                         <svg class="progress-ring" width="216" height="216" viewBox="0 0 216 216">
                             <defs>
                                 <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1546,6 +1583,10 @@
                             <svg id="heart-icon" class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                             <div class="breath-phase" id="breath-phase">
                                 <span class="breath-phase-text" id="breath-phase-text">Adem in</span>
+                            </div>
+                            <div class="pause-indicator" id="pause-indicator">
+                                <div class="pause-bar"></div>
+                                <div class="pause-bar"></div>
                             </div>
                         </div>
                     </div>
@@ -1755,6 +1796,8 @@
             customRecipient: '',
             currentIntention: 0,
             isMeditating: false,
+            isPaused: false,
+            elapsedBeforePause: 0,
             duration: 120,
             remaining: 120,
             timer: null,
@@ -1861,10 +1904,22 @@
 
         // Meditation
         $('start-btn').addEventListener('click', toggleMeditation);
+        $('breath-circle').addEventListener('click', toggleCircle);
+
+        function toggleCircle() {
+            // Bol = start / pauze / hervat
+            if (STATE.isMeditating) {
+                pauseMeditation();
+            } else if (STATE.isPaused) {
+                resumeMeditation();
+            } else {
+                startMeditation();
+            }
+        }
 
         function toggleMeditation() {
-            if (STATE.isMeditating) {
-                // Als al bezig: skip (stop zonder opslaan)
+            // Knop = start of skip
+            if (STATE.isMeditating || STATE.isPaused) {
                 skipMeditation();
             } else {
                 startMeditation();
@@ -1873,8 +1928,10 @@
 
         function startMeditation() {
             STATE.isMeditating = true;
+            STATE.isPaused = false;
             STATE.remaining = STATE.duration;
             STATE.currentIntention = 0;
+            STATE.elapsedBeforePause = 0;
 
             $('start-btn').innerHTML = `
                 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
@@ -1883,6 +1940,7 @@
             
             $('heart-icon').style.display = 'none';
             $('breath-phase').style.display = 'flex';
+            $('pause-indicator').classList.remove('visible');
             $('breath-circle').classList.add('active');
             $('recipient-section').style.opacity = '0.4';
             $('recipient-section').style.pointerEvents = 'none';
@@ -1919,15 +1977,68 @@
             }, 1000);
         }
 
+        function pauseMeditation() {
+            STATE.isMeditating = false;
+            STATE.isPaused = true;
+            STATE.pausedAt = Date.now();
+            STATE.elapsedBeforePause = (STATE.elapsedBeforePause || 0) + (STATE.pausedAt - STATE.breathStartTime);
+            
+            clearInterval(STATE.timer);
+            clearInterval(STATE.breathTimer);
+            
+            // Toon pauze indicator
+            $('breath-phase').style.display = 'none';
+            $('pause-indicator').classList.add('visible');
+            
+            // Bol stopt met animeren maar behoudt huidige staat
+            $('breath-circle').classList.remove('active');
+        }
+
+        function resumeMeditation() {
+            STATE.isMeditating = true;
+            STATE.isPaused = false;
+            
+            // Verberg pauze indicator, toon ademfase
+            $('pause-indicator').classList.remove('visible');
+            $('breath-phase').style.display = 'flex';
+            
+            // Herbereken breathStartTime zodat ademhaling verder gaat waar het was
+            STATE.breathStartTime = Date.now() - STATE.elapsedBeforePause;
+            
+            $('breath-circle').classList.add('active');
+            
+            STATE.breathTimer = setInterval(() => {
+                updateBreathPhase();
+                updateProgressRing();
+            }, 50);
+
+            STATE.timer = setInterval(() => {
+                STATE.remaining--;
+
+                const newIntention = Math.floor((STATE.duration - STATE.remaining) / 30) % 4;
+                if (newIntention !== STATE.currentIntention) {
+                    STATE.currentIntention = newIntention;
+                    transitionIntention(newIntention);
+                }
+
+                if (STATE.remaining <= 0) {
+                    completeMeditation();
+                }
+            }, 1000);
+        }
+
         function skipMeditation() {
             // Stop huidige sessie zonder opslaan
             STATE.isMeditating = false;
+            STATE.isPaused = false;
+            STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
             clearInterval(STATE.breathTimer);
             
             // Reset alles naar beginstaat
             $('heart-icon').style.display = 'block';
             $('breath-phase').style.display = 'none';
+            $('pause-indicator').classList.remove('visible');
             $('ring-progress').style.strokeDashoffset = '0';
             $('ring-progress').style.opacity = '1';
             $('recipient-section').style.opacity = '1';
@@ -1967,10 +2078,13 @@
 
         function completeMeditation() {
             STATE.isMeditating = false;
+            STATE.isPaused = false;
+            STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
             clearInterval(STATE.breathTimer);
 
             $('breath-circle').classList.remove('active');
+            $('pause-indicator').classList.remove('visible');
             
             document.querySelector('.meditation-view').style.display = 'none';
             document.querySelector('.controls').style.display = 'none';
@@ -1984,11 +2098,14 @@
         function resetMeditation() {
             // Stop timers als ze lopen
             STATE.isMeditating = false;
+            STATE.isPaused = false;
+            STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
             clearInterval(STATE.breathTimer);
             
             $('heart-icon').style.display = 'block';
             $('breath-phase').style.display = 'none';
+            $('pause-indicator').classList.remove('visible');
             $('ring-progress').style.strokeDashoffset = '0';
             $('ring-progress').style.opacity = '1';
             $('recipient-section').style.opacity = '1';
