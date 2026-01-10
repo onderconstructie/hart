@@ -2356,12 +2356,16 @@
         }
 
         function getEntriesForDate(dateStr) {
-            return STATE.entries.filter(e => e.date.startsWith(dateStr));
+            return STATE.entries.filter(e => {
+                const entryDate = new Date(e.date);
+                const localDateStr = `${entryDate.getFullYear()}-${String(entryDate.getMonth() + 1).padStart(2, '0')}-${String(entryDate.getDate()).padStart(2, '0')}`;
+                return localDateStr === dateStr;
+            });
         }
 
         // Day Modal
         function showDayModal(dateStr, entries) {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr + 'T00:00:00');
             $('modal-title').textContent = date.toLocaleDateString('nl-NL', { weekday: 'long' });
             $('modal-date').textContent = date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -2413,23 +2417,29 @@
         function calculateStreak() {
             if (STATE.entries.length === 0) return 0;
 
+            // Helper to get local date string from entry
+            function getLocalDateStr(entry) {
+                const d = new Date(entry.date);
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            }
+
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             let checkDate = new Date(today);
             let streak = 0;
 
-            const todayStr = checkDate.toISOString().split('T')[0];
-            const hasToday = STATE.entries.some(e => e.date.startsWith(todayStr));
+            const todayStr = `${checkDate.getFullYear()}-${String(checkDate.getMonth() + 1).padStart(2, '0')}-${String(checkDate.getDate()).padStart(2, '0')}`;
+            const hasToday = STATE.entries.some(e => getLocalDateStr(e) === todayStr);
 
             if (!hasToday) {
                 checkDate.setDate(checkDate.getDate() - 1);
-                const yesterdayStr = checkDate.toISOString().split('T')[0];
-                if (!STATE.entries.some(e => e.date.startsWith(yesterdayStr))) return 0;
+                const yesterdayStr = `${checkDate.getFullYear()}-${String(checkDate.getMonth() + 1).padStart(2, '0')}-${String(checkDate.getDate()).padStart(2, '0')}`;
+                if (!STATE.entries.some(e => getLocalDateStr(e) === yesterdayStr)) return 0;
             }
 
             while (true) {
-                const dateStr = checkDate.toISOString().split('T')[0];
-                if (STATE.entries.some(e => e.date.startsWith(dateStr))) {
+                const dateStr = `${checkDate.getFullYear()}-${String(checkDate.getMonth() + 1).padStart(2, '0')}-${String(checkDate.getDate()).padStart(2, '0')}`;
+                if (STATE.entries.some(e => getLocalDateStr(e) === dateStr)) {
                     streak++;
                     checkDate.setDate(checkDate.getDate() - 1);
                 } else {
@@ -2547,10 +2557,16 @@
         }
 
         function renderSessionsList() {
-            // Group by date
+            // Helper to get local date string from entry
+            function getLocalDateStr(entry) {
+                const d = new Date(entry.date);
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            }
+
+            // Group by local date
             const grouped = {};
             [...STATE.entries].reverse().forEach(e => {
-                const dateKey = e.date.split('T')[0];
+                const dateKey = getLocalDateStr(e);
                 if (!grouped[dateKey]) grouped[dateKey] = [];
                 grouped[dateKey].push(e);
             });
@@ -2565,7 +2581,7 @@
             `;
 
             Object.entries(grouped).forEach(([dateKey, entries]) => {
-                const date = new Date(dateKey);
+                const date = new Date(dateKey + 'T00:00:00');
                 const dateStr = date.toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' });
                 
                 html += `<div class="session-date-group">`;
@@ -2634,8 +2650,12 @@
             for (let i = 6; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
-                const dateStr = d.toISOString().split('T')[0];
-                const dayEntries = STATE.entries.filter(e => e.date.startsWith(dateStr));
+                const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                const dayEntries = STATE.entries.filter(e => {
+                    const entryDate = new Date(e.date);
+                    const localDateStr = `${entryDate.getFullYear()}-${String(entryDate.getMonth() + 1).padStart(2, '0')}-${String(entryDate.getDate()).padStart(2, '0')}`;
+                    return localDateStr === dateStr;
+                });
                 const avg = dayEntries.length > 0 
                     ? dayEntries.reduce((s, e) => s + e.mood, 0) / dayEntries.length 
                     : null;
@@ -2705,19 +2725,25 @@
         function calculateAllStreaks() {
             if (STATE.entries.length === 0) return [];
 
-            // Get unique dates
-            const dates = [...new Set(STATE.entries.map(e => e.date.split('T')[0]))].sort().reverse();
+            // Helper to get local date string from entry
+            function getLocalDateStr(entry) {
+                const d = new Date(entry.date);
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            }
+
+            // Get unique local dates
+            const dates = [...new Set(STATE.entries.map(e => getLocalDateStr(e)))].sort().reverse();
             
             const streaks = [];
             let currentStreak = null;
 
             for (let i = 0; i < dates.length; i++) {
-                const currentDate = new Date(dates[i]);
+                const currentDate = new Date(dates[i] + 'T00:00:00');
                 
                 if (!currentStreak) {
                     currentStreak = { start: dates[i], end: dates[i], days: 1 };
                 } else {
-                    const prevDate = new Date(currentStreak.end);
+                    const prevDate = new Date(currentStreak.end + 'T00:00:00');
                     const diff = (prevDate - currentDate) / (1000 * 60 * 60 * 24);
                     
                     if (diff === 1) {
@@ -2738,7 +2764,7 @@
         }
 
         function formatStreak(streak) {
-            const formatDate = (d) => new Date(d).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+            const formatDate = (d) => new Date(d + 'T00:00:00').toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
             return {
                 start: formatDate(streak.start),
                 end: formatDate(streak.end),
