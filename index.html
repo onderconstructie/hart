@@ -456,6 +456,14 @@
             align-items: center;
             justify-content: center;
             padding: 0 16px;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .intention-display:active {
+            cursor: grabbing;
         }
 
         .intention-text {
@@ -496,6 +504,11 @@
             border-radius: 4px;
             background: var(--border);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .dot:hover {
+            background: var(--accent-medium);
         }
 
         .dot.active {
@@ -2789,6 +2802,80 @@
 
         // Make showAnalytics global for inline onclick
         window.showAnalytics = showAnalytics;
+
+        // Swipe on intention text
+        const intentionDisplay = document.querySelector('.intention-display');
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isSwiping = false;
+
+        intentionDisplay.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            isSwiping = true;
+        }, { passive: true });
+
+        intentionDisplay.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        intentionDisplay.addEventListener('touchend', (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            isSwiping = false;
+        });
+
+        // Mouse support for desktop
+        intentionDisplay.addEventListener('mousedown', (e) => {
+            touchStartX = e.screenX;
+            isSwiping = true;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.screenX;
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (!isSwiping) return;
+            touchEndX = e.screenX;
+            handleSwipe();
+            isSwiping = false;
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) < swipeThreshold) return;
+            
+            const intentions = getIntentions(STATE.recipient);
+            let newIndex = STATE.currentIntention;
+            
+            if (diff > 0) {
+                // Swipe left = next
+                newIndex = (STATE.currentIntention + 1) % intentions.length;
+            } else {
+                // Swipe right = previous
+                newIndex = (STATE.currentIntention - 1 + intentions.length) % intentions.length;
+            }
+            
+            if (newIndex !== STATE.currentIntention) {
+                STATE.currentIntention = newIndex;
+                transitionIntention(newIndex);
+            }
+        }
+
+        // Click on dots to jump to intention
+        $$('.dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (index !== STATE.currentIntention) {
+                    STATE.currentIntention = index;
+                    transitionIntention(index);
+                }
+            });
+        });
 
         // Init
         renderCalendar();
