@@ -1808,6 +1808,7 @@
             recipient: 'ik',
             customRecipient: '',
             currentIntention: 0,
+            startIntention: 0,
             isMeditating: false,
             isPaused: false,
             elapsedBeforePause: 0,
@@ -1943,7 +1944,8 @@
             STATE.isMeditating = true;
             STATE.isPaused = false;
             STATE.remaining = STATE.duration;
-            STATE.currentIntention = 0;
+            // Onthoud waar we starten voor de timing
+            STATE.startIntention = STATE.currentIntention;
             STATE.elapsedBeforePause = 0;
 
             $('start-btn').innerHTML = `
@@ -1965,7 +1967,7 @@
             circle.style.boxShadow = '0 0 0 1px rgba(201, 154, 0, 0.02), 0 15px 34px rgba(201, 154, 0, 0.032)';
             
             STATE.breathStartTime = Date.now();
-            showIntention(0);
+            showIntention(STATE.currentIntention);
             updateDots();
             updateBreathPhase();
             updateProgressRing();
@@ -1978,7 +1980,9 @@
             STATE.timer = setInterval(() => {
                 STATE.remaining--;
 
-                const newIntention = Math.floor((STATE.duration - STATE.remaining) / 30) % 4;
+                // Bereken intentie relatief aan startpositie
+                const intentionOffset = Math.floor((STATE.duration - STATE.remaining) / 30);
+                const newIntention = (STATE.startIntention + intentionOffset) % 4;
                 if (newIntention !== STATE.currentIntention) {
                     STATE.currentIntention = newIntention;
                     transitionIntention(newIntention);
@@ -2028,7 +2032,9 @@
             STATE.timer = setInterval(() => {
                 STATE.remaining--;
 
-                const newIntention = Math.floor((STATE.duration - STATE.remaining) / 30) % 4;
+                // Bereken intentie relatief aan startpositie
+                const intentionOffset = Math.floor((STATE.duration - STATE.remaining) / 30);
+                const newIntention = (STATE.startIntention + intentionOffset) % 4;
                 if (newIntention !== STATE.currentIntention) {
                     STATE.currentIntention = newIntention;
                     transitionIntention(newIntention);
@@ -2074,6 +2080,7 @@
             $('recipient-name-display').classList.remove('visible');
             
             STATE.currentIntention = 0;
+            STATE.startIntention = 0;
             STATE.remaining = STATE.duration;
             showIntention(0);
             updateDots();
@@ -2141,6 +2148,7 @@
             $('recipient-name-display').classList.remove('visible');
             
             STATE.currentIntention = 0;
+            STATE.startIntention = 0;
             STATE.remaining = STATE.duration;
             showIntention(0);
             updateDots();
@@ -2863,6 +2871,15 @@
             
             if (newIndex !== STATE.currentIntention) {
                 STATE.currentIntention = newIndex;
+                
+                // Als meditatie bezig is, update startIntention zodat timing klopt
+                if (STATE.isMeditating || STATE.isPaused) {
+                    const elapsed = STATE.duration - STATE.remaining;
+                    const intentionOffset = Math.floor(elapsed / 30);
+                    // Bereken welke startIntention nodig is zodat huidige berekening newIndex geeft
+                    STATE.startIntention = (newIndex - intentionOffset % 4 + 4) % 4;
+                }
+                
                 transitionIntention(newIndex);
             }
         }
@@ -2871,6 +2888,13 @@
         $$('.dot').forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 if (index !== STATE.currentIntention) {
+                    // Als meditatie bezig is, update startIntention zodat timing klopt
+                    if (STATE.isMeditating || STATE.isPaused) {
+                        const elapsed = STATE.duration - STATE.remaining;
+                        const intentionOffset = Math.floor(elapsed / 30);
+                        STATE.startIntention = (index - intentionOffset % 4 + 4) % 4;
+                    }
+                    
                     STATE.currentIntention = index;
                     transitionIntention(index);
                 }
