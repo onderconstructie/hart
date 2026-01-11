@@ -1812,6 +1812,189 @@
             background: var(--accent);
             border-radius: 4px;
         }
+
+        /* Privacy/Welcome Modal */
+        .privacy-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 25, 22, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 200;
+        }
+
+        .privacy-backdrop.visible {
+            display: flex;
+        }
+
+        .privacy-modal {
+            background: white;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            animation: privacyIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+        }
+
+        @keyframes privacyIn {
+            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .privacy-header {
+            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            padding: 32px 28px 28px;
+            text-align: center;
+            position: relative;
+        }
+
+        .privacy-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .privacy-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .privacy-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .privacy-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .privacy-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .privacy-body {
+            padding: 24px 28px;
+        }
+
+        .privacy-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .privacy-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .privacy-item-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: var(--accent-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .privacy-item-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent);
+        }
+
+        .privacy-item-icon.green {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .privacy-item-icon.green svg {
+            fill: #22C55E;
+        }
+
+        .privacy-item-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .privacy-item-content p {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        .privacy-footer {
+            padding: 0 28px 28px;
+        }
+
+        .privacy-accept-btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .privacy-accept-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .privacy-accept-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .privacy-accept-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .privacy-note {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .privacy-note a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .privacy-note a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -1837,7 +2020,14 @@
                 <div class="info-body">
                     <div class="info-section">
                         <div class="info-section-icon">
-                            <svg viewBox="0 0 24 24"><path d="M8.55 12c-1.07-.71-2.25-1.27-3.53-1.61 1.28.34 2.46.9 3.53 1.61zm10.43-1.61c-1.29.34-2.49.91-3.57 1.64 1.08-.73 2.28-1.3 3.57-1.64zM15.49 9.63c-.18-2.79-1.31-5.51-3.43-7.63-2.14 2.14-3.32 4.86-3.55 7.63 1.28.68 2.46 1.56 3.49 2.63 1.03-1.06 2.21-1.94 3.49-2.63zM12 15.45c.58-.62 1.09-1.28 1.54-1.98-.52.21-1.03.46-1.54.73-.51-.27-1.02-.52-1.54-.73.45.7.96 1.36 1.54 1.98zm-2.68 4.04c-1.07.58-2.27.98-3.55 1.14 1.28-.16 2.48-.56 3.55-1.14zm5.36 0c1.07.58 2.27.98 3.55 1.14-1.28-.16-2.48-.56-3.55-1.14zm-2.68-3c-1.16 1.23-2.6 2.19-4.23 2.76 1.63-.57 3.07-1.53 4.23-2.76zm0 0c1.16 1.23 2.6 2.19 4.23 2.76-1.63-.57-3.07-1.53-4.23-2.76z"/></svg>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C12 2 9.5 6 9.5 9.5C9.5 11.5 10.5 13 12 13C13.5 13 14.5 11.5 14.5 9.5C14.5 6 12 2 12 2Z"/>
+                                <path d="M6 5C6 5 3 8.5 3 11.5C3 13.5 4.5 14.5 6 14C7.5 13.5 8.5 11.5 8.5 9.5C8.5 7 6 5 6 5Z"/>
+                                <path d="M18 5C18 5 21 8.5 21 11.5C21 13.5 19.5 14.5 18 14C16.5 13.5 15.5 11.5 15.5 9.5C15.5 7 18 5 18 5Z"/>
+                                <path d="M3 10C3 10 1 13 2 15.5C3 17.5 5 17 6.5 15.5C8 14 8 11.5 7 10C6 10 3 10 3 10Z"/>
+                                <path d="M21 10C21 10 23 13 22 15.5C21 17.5 19 17 17.5 15.5C16 14 16 11.5 17 10C18 10 21 10 21 10Z"/>
+                                <path d="M12 13C8 13 5 16 5 18.5C5 20 7 21 12 21C17 21 19 20 19 18.5C19 16 16 13 12 13Z"/>
+                            </svg>
                         </div>
                         <div class="info-section-content">
                             <p>Geïnspireerd door de boeddhistische <strong>Metta</strong> meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
@@ -2162,6 +2352,60 @@
                     <button class="btn btn-reset" id="settings-reset">Standaard</button>
                     <button class="btn btn-primary" id="settings-save">Opslaan</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy/Welcome Modal -->
+    <div class="privacy-backdrop" id="privacy-modal">
+        <div class="privacy-modal">
+            <div class="privacy-header">
+                <div class="privacy-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <h2 class="privacy-title">Welkom</h2>
+                <p class="privacy-subtitle">Even voorstellen hoe dit werkt</p>
+            </div>
+            
+            <div class="privacy-body">
+                <div class="privacy-item">
+                    <div class="privacy-item-icon green">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <div class="privacy-item-content">
+                        <h4>Jouw privacy voorop</h4>
+                        <p>Geen cookies, geen tracking, geen account nodig. Wij verzamelen niets.</p>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
+                    </div>
+                    <div class="privacy-item-content">
+                        <h4>Lokale opslag</h4>
+                        <p>Je sessies en instellingen worden alleen in je eigen browser bewaard. Wis je browserdata? Dan is alles weg.</p>
+                    </div>
+                </div>
+                
+                <div class="privacy-item">
+                    <div class="privacy-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="privacy-item-content">
+                        <h4>Open source</h4>
+                        <p>Deze app is volledig transparant en vrij beschikbaar op GitHub.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="privacy-footer">
+                <button class="privacy-accept-btn" id="privacy-accept">
+                    Begrepen, aan de slag
+                </button>
+                <p class="privacy-note">
+                    Door verder te gaan ga je akkoord met lokale opslag
+                </p>
             </div>
         </div>
     </div>
@@ -3353,6 +3597,22 @@
         // Init
         renderCalendar();
         updateStats();
+
+        // Privacy modal - show on first visit
+        function checkPrivacyConsent() {
+            const hasConsent = localStorage.getItem('lk_privacy_accepted');
+            if (!hasConsent) {
+                $('privacy-modal').classList.add('visible');
+            }
+        }
+
+        $('privacy-accept').addEventListener('click', () => {
+            localStorage.setItem('lk_privacy_accepted', 'true');
+            $('privacy-modal').classList.remove('visible');
+        });
+
+        // Check on load
+        checkPrivacyConsent();
     </script>
 </body>
 </html>
