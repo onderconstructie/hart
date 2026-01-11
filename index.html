@@ -198,17 +198,18 @@
             top: 100%;
             right: 16px;
             margin-top: 8px;
-            width: 300px;
+            width: 320px;
             background: white;
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 0;
             box-shadow: 0 12px 40px rgba(0,0,0,0.15);
             opacity: 0;
             visibility: hidden;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
             text-align: left;
+            overflow: hidden;
         }
 
         .info-tooltip.visible {
@@ -226,20 +227,133 @@
             border-top: none;
         }
 
-        .info-tooltip p {
-            font-size: 0.8rem;
-            line-height: 1.6;
-            color: var(--text-soft);
-            margin-bottom: 12px;
+        .info-header {
+            background: linear-gradient(145deg, rgba(212, 160, 0, 0.08), rgba(212, 160, 0, 0.03));
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .info-tooltip p:last-child {
+        .info-header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-header-title svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent);
+        }
+
+        .info-body {
+            padding: 18px 20px;
+        }
+
+        .info-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .info-section:last-child {
             margin-bottom: 0;
         }
 
-        .info-tooltip p strong {
+        .info-section-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: var(--accent-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-section-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent);
+        }
+
+        .info-section-content {
+            flex: 1;
+        }
+
+        .info-section-content p {
+            font-size: 0.8rem;
+            line-height: 1.55;
+            color: var(--text-soft);
+            margin: 0;
+        }
+
+        .info-section-content p strong {
             color: var(--text);
             font-weight: 600;
+        }
+
+        .info-disclaimer {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-top: 16px;
+        }
+
+        .info-disclaimer p {
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: #B5B0A5;
+            margin: 0;
+        }
+
+        .info-footer {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+        }
+
+        .info-footer-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .info-footer-link:hover {
+            background: white;
+            color: var(--accent);
+        }
+
+        .info-footer-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .info-footer-link.primary {
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .info-footer-link.primary:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .info-footer-link.primary svg {
+            fill: var(--accent);
         }
 
         /* Views */
@@ -1171,7 +1285,7 @@
         .analytics-btn svg {
             width: 18px;
             height: 18px;
-            fill: currentColor;
+            fill: var(--accent);
         }
 
         /* Heatmap legend */
@@ -1522,6 +1636,162 @@
             fill: var(--accent);
         }
 
+        /* Settings Modal */
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .setting-group-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--bg);
+            border-radius: 12px;
+        }
+
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .setting-label-main {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .setting-label-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .setting-input-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .setting-input {
+            width: 56px;
+            padding: 8px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .setting-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .setting-input::-webkit-inner-spin-button,
+        .setting-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .setting-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .setting-unit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .breath-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 16px;
+            background: linear-gradient(145deg, var(--accent-light), rgba(212, 160, 0, 0.04));
+            border-radius: 14px;
+            margin-top: 4px;
+        }
+
+        .breath-preview-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .breath-preview-bar {
+            height: 8px;
+            background: var(--accent);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .breath-preview-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .breath-total {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            margin-top: 8px;
+        }
+
+        .breath-total strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .settings-actions .btn {
+            flex: 1;
+            min-width: auto;
+        }
+
+        .btn-reset {
+            background: white;
+            color: var(--text-soft);
+            border: 1.5px solid var(--border);
+            padding: 12px 20px;
+        }
+
+        .btn-reset:hover {
+            background: var(--bg);
+            border-color: var(--text-muted);
+        }
+
         /* Pause indicator */
         .pause-indicator {
             display: none;
@@ -1558,13 +1828,43 @@
                 <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
             <div class="info-tooltip" id="info-tooltip">
-                <p>Deze oefening is geïnspireerd door de boeddhistische metta meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
-                
-                <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan hulpbronnen zoals verbondenheid en veerkracht. Effecten verschillen per persoon en groeien meestal door regelmatige oefening over tijd.</p>
-                
-                <p><strong>Disclaimer:</strong> Dit is geen medische behandeling en geen diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
-                
-                <p style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.75rem;"><a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">Contact</a></p>
+                <div class="info-header">
+                    <div class="info-header-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        Over Hartmeditatie
+                    </div>
+                </div>
+                <div class="info-body">
+                    <div class="info-section">
+                        <div class="info-section-icon">
+                            <svg viewBox="0 0 24 24"><path d="M8.55 12c-1.07-.71-2.25-1.27-3.53-1.61 1.28.34 2.46.9 3.53 1.61zm10.43-1.61c-1.29.34-2.49.91-3.57 1.64 1.08-.73 2.28-1.3 3.57-1.64zM15.49 9.63c-.18-2.79-1.31-5.51-3.43-7.63-2.14 2.14-3.32 4.86-3.55 7.63 1.28.68 2.46 1.56 3.49 2.63 1.03-1.06 2.21-1.94 3.49-2.63zM12 15.45c.58-.62 1.09-1.28 1.54-1.98-.52.21-1.03.46-1.54.73-.51-.27-1.02-.52-1.54-.73.45.7.96 1.36 1.54 1.98zm-2.68 4.04c-1.07.58-2.27.98-3.55 1.14 1.28-.16 2.48-.56 3.55-1.14zm5.36 0c1.07.58 2.27.98 3.55 1.14-1.28-.16-2.48-.56-3.55-1.14zm-2.68-3c-1.16 1.23-2.6 2.19-4.23 2.76 1.63-.57 3.07-1.53 4.23-2.76zm0 0c1.16 1.23 2.6 2.19 4.23 2.76-1.63-.57-3.07-1.53-4.23-2.76z"/></svg>
+                        </div>
+                        <div class="info-section-content">
+                            <p>Geïnspireerd door de boeddhistische <strong>Metta</strong> meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-icon">
+                            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg>
+                        </div>
+                        <div class="info-section-content">
+                            <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan verbondenheid en veerkracht.</p>
+                        </div>
+                    </div>
+                    <div class="info-disclaimer">
+                        <p>Dit is geen medische behandeling of diagnose. Zoek bij klachten hulp via je huisarts of psycholoog.</p>
+                    </div>
+                </div>
+                <div class="info-footer">
+                    <a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" class="info-footer-link">
+                        <svg viewBox="0 0 24 24" style="fill: var(--accent);"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        Contact
+                    </a>
+                    <button class="info-footer-link primary" id="open-settings">
+                        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        Instellingen
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1791,6 +2091,81 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="modal-backdrop" id="settings-modal">
+        <div class="modal" style="max-width: 380px;">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">Instellingen</h3>
+                    <p class="modal-date">Ademhalingsritme</p>
+                </div>
+                <button class="modal-close-x" id="settings-modal-close">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="setting-label-main">Inademen</span>
+                            <span class="setting-label-sub">Rustig lucht opnemen</span>
+                        </div>
+                        <div class="setting-input-wrap">
+                            <input type="number" class="setting-input" id="setting-inhale" min="2" max="10" value="4">
+                            <span class="setting-unit">sec</span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="setting-label-main">Vasthouden</span>
+                            <span class="setting-label-sub">Even stilstaan</span>
+                        </div>
+                        <div class="setting-input-wrap">
+                            <input type="number" class="setting-input" id="setting-hold" min="0" max="10" value="6">
+                            <span class="setting-unit">sec</span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <span class="setting-label-main">Uitademen</span>
+                            <span class="setting-label-sub">Langzaam loslaten</span>
+                        </div>
+                        <div class="setting-input-wrap">
+                            <input type="number" class="setting-input" id="setting-exhale" min="2" max="12" value="6">
+                            <span class="setting-unit">sec</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breath-preview">
+                    <div class="breath-preview-item">
+                        <div class="breath-preview-bar" id="preview-inhale" style="width: 40px;"></div>
+                        <span class="breath-preview-label">In</span>
+                    </div>
+                    <div class="breath-preview-item">
+                        <div class="breath-preview-bar" id="preview-hold" style="width: 60px; opacity: 0.7;"></div>
+                        <span class="breath-preview-label">Vast</span>
+                    </div>
+                    <div class="breath-preview-item">
+                        <div class="breath-preview-bar" id="preview-exhale" style="width: 60px; opacity: 0.85;"></div>
+                        <span class="breath-preview-label">Uit</span>
+                    </div>
+                </div>
+                <div class="breath-total">
+                    Eén ademcyclus: <strong id="breath-cycle-total">16</strong> seconden
+                </div>
+
+                <div class="settings-actions">
+                    <button class="btn btn-reset" id="settings-reset">Standaard</button>
+                    <button class="btn btn-primary" id="settings-save">Opslaan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const $ = id => document.getElementById(id);
         const $$ = sel => document.querySelectorAll(sel);
@@ -1802,6 +2177,9 @@
             { label: 'Heel goed', desc: 'Warm en open', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
             { label: 'Stralend', desc: 'Vol liefde en vreugde', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><path d="M9 9.5c.5-.5 1-.5 1.5 0"/><path d="M13.5 9.5c.5-.5 1-.5 1.5 0"/></svg>' }
         ];
+
+        const DEFAULT_BREATH = { inhale: 4, hold: 6, exhale: 6 };
+        const savedBreath = JSON.parse(localStorage.getItem('lk_breath') || 'null') || DEFAULT_BREATH;
 
         const STATE = {
             entries: JSON.parse(localStorage.getItem('lk_entries') || '[]'),
@@ -1820,7 +2198,8 @@
             currentMonth: new Date().getMonth(),
             currentYear: new Date().getFullYear(),
             selectedMood: 3,
-            analyticsView: 'overview' // overview, sessions, streaks
+            analyticsView: 'overview',
+            breath: { ...savedBreath }
         };
 
         function getIntentions(recipient) {
@@ -2167,35 +2546,39 @@
         function updateBreathPhase() {
             if (!STATE.isMeditating) return;
             
+            const { inhale, hold, exhale } = STATE.breath;
+            const cycleTime = inhale + hold + exhale;
+            
             const elapsed = Date.now() - STATE.breathStartTime;
-            const cycleTime = elapsed % 16000;
-            const phase = cycleTime / 1000; // 0-16 seconds
+            const cycleMs = (elapsed % (cycleTime * 1000));
+            const phase = cycleMs / 1000; // seconds into current cycle
             
             const circle = $('breath-circle');
             let phaseText = 'Adem in';
             let scale, bgOpacity;
             
-            if (phase < 4) {
-                // INADEMEN: 0-4s - groter worden met pulsering
+            if (phase < inhale) {
+                // INADEMEN
                 phaseText = 'Adem in';
-                const progress = phase / 4; // 0 to 1
+                const progress = phase / inhale; // 0 to 1
                 const baseScale = 0.7 + (progress * 0.3); // 0.7 to 1.0
-                const pulse = Math.sin(phase * Math.PI * 2) * 0.02; // kleine pulsering
+                const pulse = Math.sin(phase * Math.PI * 2) * 0.02;
                 scale = baseScale + pulse;
                 bgOpacity = 0.04 + (progress * 0.12);
-            } else if (phase < 10) {
-                // VASTHOUDEN: 4-10s - grote grootte met pulsering
+            } else if (hold > 0 && phase < inhale + hold) {
+                // VASTHOUDEN (alleen als hold > 0)
                 phaseText = 'Vasthouden';
-                const holdPhase = phase - 4; // 0-6 seconds
-                const pulse = Math.sin(holdPhase * Math.PI * 1) * 0.02; // langzame pulsering
+                const holdPhase = phase - inhale;
+                const pulse = Math.sin(holdPhase * Math.PI * 1) * 0.02;
                 scale = 1.0 + pulse;
                 bgOpacity = 0.16 + (pulse * 0.5);
             } else {
-                // UITADEMEN: 10-16s - kleiner worden met pulsering
+                // UITADEMEN
                 phaseText = 'Adem uit';
-                const progress = (phase - 10) / 6; // 0 to 1
+                const exhaleStart = inhale + hold;
+                const progress = (phase - exhaleStart) / exhale; // 0 to 1
                 const baseScale = 1.0 - (progress * 0.3); // 1.0 to 0.7
-                const pulse = Math.sin((phase - 10) * Math.PI * 1.5) * 0.015; // subtiele pulsering
+                const pulse = Math.sin((phase - exhaleStart) * Math.PI * 1.5) * 0.015;
                 scale = baseScale + pulse;
                 bgOpacity = 0.16 - (progress * 0.12);
             }
@@ -2900,6 +3283,72 @@
                 }
             });
         });
+
+        // Settings Modal
+        $('open-settings').addEventListener('click', (e) => {
+            e.preventDefault();
+            $('info-tooltip').classList.remove('visible');
+            openSettings();
+        });
+
+        function openSettings() {
+            // Load current values into inputs
+            $('setting-inhale').value = STATE.breath.inhale;
+            $('setting-hold').value = STATE.breath.hold;
+            $('setting-exhale').value = STATE.breath.exhale;
+            updateBreathPreview();
+            $('settings-modal').classList.add('visible');
+        }
+
+        function updateBreathPreview() {
+            const inhale = parseInt($('setting-inhale').value) || 4;
+            const hold = parseInt($('setting-hold').value) || 0;
+            const exhale = parseInt($('setting-exhale').value) || 6;
+            const total = inhale + hold + exhale;
+            
+            // Update preview bars (max width ~80px)
+            const maxVal = Math.max(inhale, hold || 1, exhale);
+            const scale = 80 / maxVal;
+            
+            $('preview-inhale').style.width = `${inhale * scale}px`;
+            $('preview-hold').style.width = hold > 0 ? `${hold * scale}px` : '4px';
+            $('preview-hold').style.opacity = hold > 0 ? '0.7' : '0.2';
+            $('preview-exhale').style.width = `${exhale * scale}px`;
+            
+            // Update total
+            $('breath-cycle-total').textContent = total;
+        }
+
+        // Listen for input changes
+        $('setting-inhale').addEventListener('input', updateBreathPreview);
+        $('setting-hold').addEventListener('input', updateBreathPreview);
+        $('setting-exhale').addEventListener('input', updateBreathPreview);
+
+        // Reset to defaults
+        $('settings-reset').addEventListener('click', () => {
+            $('setting-inhale').value = DEFAULT_BREATH.inhale;
+            $('setting-hold').value = DEFAULT_BREATH.hold;
+            $('setting-exhale').value = DEFAULT_BREATH.exhale;
+            updateBreathPreview();
+        });
+
+        // Save settings
+        $('settings-save').addEventListener('click', () => {
+            const inhale = Math.max(2, Math.min(10, parseInt($('setting-inhale').value) || 4));
+            const hold = Math.max(0, Math.min(10, parseInt($('setting-hold').value) || 6));
+            const exhale = Math.max(2, Math.min(12, parseInt($('setting-exhale').value) || 6));
+            
+            STATE.breath = { inhale, hold, exhale };
+            localStorage.setItem('lk_breath', JSON.stringify(STATE.breath));
+            
+            $('settings-modal').classList.remove('visible');
+        });
+
+        // Close settings modal
+        $('settings-modal').addEventListener('click', (e) => {
+            if (e.target === $('settings-modal')) $('settings-modal').classList.remove('visible');
+        });
+        $('settings-modal-close').addEventListener('click', () => $('settings-modal').classList.remove('visible'));
 
         // Init
         renderCalendar();
