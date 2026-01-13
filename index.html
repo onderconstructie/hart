@@ -344,12 +344,22 @@
 
         .info-footer-link.primary {
             background: white;
-            border: 1px solid var(--border);
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .info-footer-link.primary:hover {
-            border-color: var(--accent);
+            color: var(--accent);
             background: var(--accent-light);
+        }
+
+        .info-footer-link.primary:active {
+            transform: scale(0.97);
         }
 
         .info-footer-link.primary svg {
@@ -3339,8 +3349,8 @@
                     <div class="highlight-card" style="display: flex; align-items: center; justify-content: center; gap: 12px;">
                         <span style="font-size: 2rem;">${getMoodSvg(Math.round(avgMood))}</span>
                         <div>
-                            <div class="highlight-value">${avgMood.toFixed(1)}</div>
-                            <div class="highlight-label">${MOODS[Math.round(avgMood) - 1]?.label || '-'}</div>
+                            <div class="highlight-value">${MOODS[Math.round(avgMood) - 1]?.label || '-'}</div>
+                            <div class="highlight-label">${MOODS[Math.round(avgMood) - 1]?.desc || ''}</div>
                         </div>
                     </div>
                 </div>
@@ -3595,7 +3605,8 @@
         // Save settings
         $('settings-save').addEventListener('click', () => {
             const inhale = Math.max(2, Math.min(10, parseInt($('setting-inhale').value) || 4));
-            const hold = Math.max(0, Math.min(10, parseInt($('setting-hold').value) || 6));
+            const holdValue = parseInt($('setting-hold').value);
+            const hold = Math.max(0, Math.min(10, isNaN(holdValue) ? 6 : holdValue));
             const exhale = Math.max(2, Math.min(12, parseInt($('setting-exhale').value) || 6));
             
             STATE.breath = { inhale, hold, exhale };
