@@ -3,35 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hartmeditatie</title>
+    <meta name="theme-color" content="#ffffff">
+    <title>Hartmeditatie – Onder Constructie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4A000'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
     <style>
         :root {
-            --bg: #FDFCF8;
+            --bg: #f8fafc;
             --surface: #FFFFFF;
-            --border: #EBE8E0;
-            --accent: #D4A000;
-            --accent-hover: #C49300;
-            --accent-light: rgba(212, 160, 0, 0.08);
-            --accent-medium: rgba(212, 160, 0, 0.15);
-            --accent-glow: rgba(212, 160, 0, 0.25);
-            --text: #1A1916;
-            --text-soft: #5C5850;
-            --text-muted: #9A958A;
+            --border: #e2e8f0;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --accent-light: rgba(16, 185, 129, 0.08);
+            --accent-medium: rgba(16, 185, 129, 0.15);
+            --accent-glow: rgba(16, 185, 129, 0.25);
+            --text: #1e293b;
+            --text-soft: #475569;
+            --text-muted: #94a3b8;
             
             /* Mood heatmap colors - 5 levels */
-            --mood-1: rgba(212, 160, 0, 0.12);
-            --mood-2: rgba(212, 160, 0, 0.22);
-            --mood-3: rgba(212, 160, 0, 0.35);
-            --mood-4: rgba(212, 160, 0, 0.50);
-            --mood-5: rgba(212, 160, 0, 0.68);
+            --mood-1: rgba(16, 185, 129, 0.12);
+            --mood-2: rgba(16, 185, 129, 0.22);
+            --mood-3: rgba(16, 185, 129, 0.35);
+            --mood-4: rgba(16, 185, 129, 0.50);
+            --mood-5: rgba(16, 185, 129, 0.68);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: rgba(201, 154, 0, 0.2);
+            -webkit-tap-highlight-color: rgba(5, 150, 105, 0.2);
         }
 
         button:focus,
@@ -40,7 +44,7 @@
         }
 
         button:focus-visible {
-            box-shadow: 0 0 0 3px rgba(201, 154, 0, 0.3);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3);
         }
 
         html {
@@ -49,7 +53,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -68,23 +72,20 @@
 
         /* Header Banner */
         .header-banner {
-            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
             padding: 14px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 
-                0 4px 16px rgba(201, 154, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
         }
 
         .header-banner::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            background: none;
             pointer-events: none;
         }
 
@@ -106,14 +107,14 @@
         .logo-mark svg {
             width: 24px;
             height: 24px;
-            fill: white;
+            fill: #10b981;
         }
 
         .logo-text {
             font-size: 1.1rem;
             font-weight: 700;
-            color: white;
-            letter-spacing: -0.01em;
+            color: #1e293b;
+            letter-spacing: -0.02em;
         }
 
         .banner-info-btn {
@@ -124,19 +125,29 @@
             width: 32px;
             height: 32px;
             border: none;
-            background: rgba(255, 255, 255, 0.15);
+            background: #f1f5f9;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #64748b;
             transition: all 0.2s;
         }
 
         .banner-info-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: #e2e8f0;
+            color: #10b981;
         }
+
+        .oc-back {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            display: flex; align-items: center; gap: 0.375rem; padding: 6px 8px; border-radius: 8px;
+            font-size: 0.875rem; color: #94a3b8; text-decoration: none; transition: color 0.2s; z-index: 1;
+        }
+        .oc-back:hover { color: #10b981; }
+        .oc-back svg { width: 16px; height: 16px; }
+        @media (max-width: 480px) { .oc-back span { display: none; } }
 
         .banner-info-btn svg {
             width: 18px;
@@ -148,7 +159,7 @@
             padding: 12px 20px;
             display: flex;
             justify-content: center;
-            background: rgba(253, 252, 248, 0.95);
+            background: rgba(248, 250, 252, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0,0,0,0.04);
@@ -228,7 +239,7 @@
         }
 
         .info-header {
-            background: linear-gradient(145deg, rgba(212, 160, 0, 0.08), rgba(212, 160, 0, 0.03));
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));
             padding: 18px 20px;
             border-bottom: 1px solid var(--border);
         }
@@ -305,7 +316,7 @@
         .info-disclaimer p {
             font-size: 0.75rem;
             line-height: 1.5;
-            color: #B5B0A5;
+            color: #cbd5e1;
             margin: 0;
         }
 
@@ -401,15 +412,15 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: linear-gradient(145deg, rgba(201, 154, 0, 0.04), rgba(166, 124, 0, 0.024));
+            background: linear-gradient(145deg, rgba(5, 150, 105, 0.04), rgba(4, 120, 87, 0.024));
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 36px;
             position: relative;
             box-shadow: 
-                0 0 0 1px rgba(212, 160, 0, 0.02),
-                0 15px 34px rgba(212, 160, 0, 0.032);
+                0 0 0 1px rgba(16, 185, 129, 0.02),
+                0 15px 34px rgba(16, 185, 129, 0.032);
             transform: scale(0.7);
             transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
@@ -418,8 +429,8 @@
 
         .breath-circle:hover {
             box-shadow: 
-                0 0 0 1px rgba(212, 160, 0, 0.08),
-                0 15px 40px rgba(212, 160, 0, 0.08);
+                0 0 0 1px rgba(16, 185, 129, 0.08),
+                0 15px 40px rgba(16, 185, 129, 0.08);
         }
 
         .breath-circle:focus {
@@ -437,78 +448,78 @@
         @keyframes breathe {
             0% { 
                 transform: scale(0.75); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.04), rgba(166, 124, 0, 0.02));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.03), 0 4px 12px rgba(201, 154, 0, 0.02);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.04), rgba(4, 120, 87, 0.02));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.03), 0 4px 12px rgba(5, 150, 105, 0.02);
             }
             6.25% { 
                 transform: scale(0.82); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.06), rgba(166, 124, 0, 0.03));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.06), rgba(4, 120, 87, 0.03));
             }
             12.5% { 
                 transform: scale(0.92); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.09), rgba(166, 124, 0, 0.05));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.06), 0 10px 28px rgba(201, 154, 0, 0.06);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.09), rgba(4, 120, 87, 0.05));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.06), 0 10px 28px rgba(5, 150, 105, 0.06);
             }
             18.75% { 
                 transform: scale(1.04); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.12), rgba(166, 124, 0, 0.07));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.12), rgba(4, 120, 87, 0.07));
             }
             25% { 
                 transform: scale(1.15); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.16), rgba(166, 124, 0, 0.10));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.12), 0 20px 50px rgba(201, 154, 0, 0.14);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.16), rgba(4, 120, 87, 0.10));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12), 0 20px 50px rgba(5, 150, 105, 0.14);
             }
             31.25% { 
                 transform: scale(1.12); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.14), rgba(166, 124, 0, 0.09));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.14), rgba(4, 120, 87, 0.09));
             }
             37.5% { 
                 transform: scale(1.15); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.16), rgba(166, 124, 0, 0.10));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.16), rgba(4, 120, 87, 0.10));
             }
             43.75% { 
                 transform: scale(1.12);
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.14), rgba(166, 124, 0, 0.09));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.14), rgba(4, 120, 87, 0.09));
             }
             50% { 
                 transform: scale(1.15); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.16), rgba(166, 124, 0, 0.10));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.16), rgba(4, 120, 87, 0.10));
             }
             56.25% { 
                 transform: scale(1.12);
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.14), rgba(166, 124, 0, 0.09));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.14), rgba(4, 120, 87, 0.09));
             }
             62.5% { 
                 transform: scale(1.15); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.16), rgba(166, 124, 0, 0.10));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.12), 0 20px 50px rgba(201, 154, 0, 0.14);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.16), rgba(4, 120, 87, 0.10));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12), 0 20px 50px rgba(5, 150, 105, 0.14);
             }
             68.75% { 
                 transform: scale(1.08); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.13), rgba(166, 124, 0, 0.08));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.13), rgba(4, 120, 87, 0.08));
             }
             75% { 
                 transform: scale(1.0); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.11), rgba(166, 124, 0, 0.07));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.08), 0 14px 38px rgba(201, 154, 0, 0.10);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.11), rgba(4, 120, 87, 0.07));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.08), 0 14px 38px rgba(5, 150, 105, 0.10);
             }
             81.25% { 
                 transform: scale(0.92); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.08), rgba(166, 124, 0, 0.05));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.08), rgba(4, 120, 87, 0.05));
             }
             87.5% { 
                 transform: scale(0.86); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.06), rgba(166, 124, 0, 0.04));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.05), 0 8px 24px rgba(201, 154, 0, 0.05);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.06), rgba(4, 120, 87, 0.04));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.05), 0 8px 24px rgba(5, 150, 105, 0.05);
             }
             93.75% { 
                 transform: scale(0.80); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.05), rgba(166, 124, 0, 0.03));
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.05), rgba(4, 120, 87, 0.03));
             }
             100% { 
                 transform: scale(0.75); 
-                background: linear-gradient(145deg, rgba(201, 154, 0, 0.04), rgba(166, 124, 0, 0.02));
-                box-shadow: 0 0 0 1px rgba(201, 154, 0, 0.03), 0 4px 12px rgba(201, 154, 0, 0.02);
+                background: linear-gradient(145deg, rgba(5, 150, 105, 0.04), rgba(4, 120, 87, 0.02));
+                box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.03), 0 4px 12px rgba(5, 150, 105, 0.02);
             }
         }
 
@@ -542,7 +553,7 @@
         .breath-phase-text {
             font-size: 0.9rem;
             font-weight: 700;
-            background: linear-gradient(145deg, #D4A000 0%, #A67C00 100%);
+            background: linear-gradient(145deg, #10b981 0%, #047857 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -565,7 +576,7 @@
         }
 
         .progress-ring .ring-bg {
-            stroke: rgba(201, 154, 0, 0.1);
+            stroke: rgba(5, 150, 105, 0.1);
         }
 
         .progress-ring .ring-progress {
@@ -609,7 +620,7 @@
 
         .intention-text .keyword {
             font-weight: 700;
-            background: linear-gradient(135deg, #D4A000, #A67C00);
+            background: linear-gradient(135deg, #10b981, #047857);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -789,7 +800,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
             color: white;
             box-shadow: 
                 0 4px 16px var(--accent-glow),
@@ -895,12 +906,12 @@
             width: 88px;
             height: 88px;
             margin: 0 auto 20px;
-            background: linear-gradient(145deg, var(--accent-light), rgba(212, 160, 0, 0.04));
+            background: linear-gradient(145deg, var(--accent-light), rgba(16, 185, 129, 0.04));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 32px rgba(212, 160, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1013,13 +1024,13 @@
         .success-icon {
             width: 96px;
             height: 96px;
-            background: linear-gradient(145deg, var(--accent-light), rgba(212, 160, 0, 0.06));
+            background: linear-gradient(145deg, var(--accent-light), rgba(16, 185, 129, 0.06));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 28px;
-            box-shadow: 0 12px 40px rgba(212, 160, 0, 0.15);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
         }
 
         .success-icon svg {
@@ -1195,18 +1206,18 @@
         .day.mood-4 { background: var(--mood-4); }
         .day.mood-5 { background: var(--mood-5); }
 
-        .day.mood-1:hover { background: rgba(212, 160, 0, 0.18); }
-        .day.mood-2:hover { background: rgba(212, 160, 0, 0.28); }
-        .day.mood-3:hover { background: rgba(212, 160, 0, 0.42); }
-        .day.mood-4:hover { background: rgba(212, 160, 0, 0.58); }
-        .day.mood-5:hover { background: rgba(212, 160, 0, 0.75); }
+        .day.mood-1:hover { background: rgba(16, 185, 129, 0.18); }
+        .day.mood-2:hover { background: rgba(16, 185, 129, 0.28); }
+        .day.mood-3:hover { background: rgba(16, 185, 129, 0.42); }
+        .day.mood-4:hover { background: rgba(16, 185, 129, 0.58); }
+        .day.mood-5:hover { background: rgba(16, 185, 129, 0.75); }
 
         .day-count {
             position: absolute;
             bottom: 2px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.6rem;
+            font-size: 0.6875rem;
             color: var(--accent);
             font-weight: 700;
         }
@@ -1254,7 +1265,7 @@
         }
 
         .stat-label {
-            font-size: 0.65rem;
+            font-size: 0.6875rem;
             color: var(--text-muted);
             margin-top: 8px;
             text-transform: uppercase;
@@ -1331,7 +1342,7 @@
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(26, 25, 22, 0.5);
+            background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -1519,7 +1530,7 @@
         }
 
         .mood-bar-label {
-            font-size: 0.65rem;
+            font-size: 0.6875rem;
             color: var(--text-muted);
             font-weight: 600;
         }
@@ -1739,7 +1750,7 @@
             justify-content: center;
             gap: 4px;
             padding: 16px;
-            background: linear-gradient(145deg, var(--accent-light), rgba(212, 160, 0, 0.04));
+            background: linear-gradient(145deg, var(--accent-light), rgba(16, 185, 129, 0.04));
             border-radius: 14px;
             margin-top: 4px;
         }
@@ -1760,7 +1771,7 @@
         }
 
         .breath-preview-label {
-            font-size: 0.65rem;
+            font-size: 0.6875rem;
             color: var(--text-muted);
             font-weight: 600;
             text-transform: uppercase;
@@ -1827,7 +1838,7 @@
         .privacy-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(26, 25, 22, 0.7);
+            background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             display: none;
@@ -1857,7 +1868,7 @@
         }
 
         .privacy-header {
-            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
             padding: 32px 28px 28px;
             text-align: center;
             position: relative;
@@ -1932,11 +1943,11 @@
         }
 
         .privacy-item-icon.green {
-            background: rgba(212, 160, 0, 0.1); /* Gouden achtergrond (transparant) */
+            background: rgba(16, 185, 129, 0.1); /* Gouden achtergrond (transparant) */
         }
 
         .privacy-item-icon.green svg {
-            fill: #D4A000; /* Goud icoontje */
+            fill: #10b981; /* Goud icoontje */
         }
 
         .privacy-item-content h4 {
@@ -1962,7 +1973,7 @@
             padding: 16px 24px;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(145deg, #E8B800 0%, #C99A00 100%);
+            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
             color: white;
             font-size: 1rem;
             font-weight: 600;
@@ -2005,12 +2016,115 @@
         .privacy-note a:hover {
             text-decoration: underline;
         }
+    
+        /* Dialoog in de pagina, in plaats van de pop-ups van de browser */
+        .oc-dialog-backdrop {
+            position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center;
+            padding: 1rem; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(3px);
+            opacity: 0; transition: opacity 0.15s ease;
+        }
+        .oc-dialog-backdrop.open { opacity: 1; }
+        .oc-dialog {
+            width: 100%; max-width: 400px; background: #ffffff; border-radius: 16px; padding: 1.375rem 1.375rem 1.125rem;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25); font-family: 'DM Sans', system-ui, sans-serif;
+            transform: translateY(8px) scale(0.98); transition: transform 0.15s ease;
+        }
+        .oc-dialog-backdrop.open .oc-dialog { transform: none; }
+        .oc-dialog-msg { font-size: 0.9375rem; line-height: 1.5; color: #334155; white-space: pre-line; }
+        .oc-dialog-label { display: block; font-size: 0.875rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem; }
+        .oc-dialog-input {
+            width: 100%; padding: 0.6875rem 0.875rem; border: 1.5px solid #e2e8f0; border-radius: 10px; font: inherit;
+            font-size: 1rem; color: #1e293b; outline: none; background: #f8fafc;
+        }
+        .oc-dialog-input:focus { border-color: #10b981; background: #ffffff; }
+        .oc-dialog-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
+        .oc-dialog-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; padding: 0.625rem 1rem; border-radius: 10px; border: 0; cursor: pointer; }
+        .oc-dialog-cancel { background: #f1f5f9; color: #475569; }
+        .oc-dialog-cancel:hover { background: #e2e8f0; }
+        .oc-dialog-ok { background: #10b981; color: #ffffff; }
+        .oc-dialog-ok:hover { background: #059669; }
+        .oc-dialog-ok.danger { background: #ef4444; }
+        .oc-dialog-ok.danger:hover { background: #dc2626; }
+    
+        /* Onder Constructie: gedeelde footer en quote (huisstijl) */
+        footer.oc-footer {
+            text-align: center;
+            padding: 2rem 1.5rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+            margin-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #10b981;
+        }
+
+        footer.oc-footer .oc-quote {
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: #10b981;
+            opacity: 1;
+            font-style: normal;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
+    <script>
+        /* Vervangt confirm() en prompt() door een dialoog in de pagina. Beide geven een Promise terug. */
+        function ocDialog({ message = '', label = '', value = null, okText = 'OK', danger = false }) {
+            return new Promise(resolve => {
+                const isPrompt = value !== null;
+                document.querySelectorAll('.dropdown-menu.active, .dropdown.active').forEach(d => d.classList.remove('active'));
+                const back = document.createElement('div');
+                back.className = 'oc-dialog-backdrop';
+                back.innerHTML = `<div class="oc-dialog" role="dialog" aria-modal="true">
+                    ${isPrompt ? `<label class="oc-dialog-label"></label><input class="oc-dialog-input" type="text">`
+                               : `<p class="oc-dialog-msg"></p>`}
+                    <div class="oc-dialog-actions">
+                        <button class="oc-dialog-btn oc-dialog-cancel" type="button">Annuleer</button>
+                        <button class="oc-dialog-btn oc-dialog-ok${danger ? ' danger' : ''}" type="button"></button>
+                    </div></div>`;
+                if (isPrompt) { back.querySelector('label').textContent = label; back.querySelector('input').value = value; }
+                else back.querySelector('.oc-dialog-msg').textContent = message;
+                back.querySelector('.oc-dialog-ok').textContent = okText;
+                const prev = document.activeElement;
+                document.body.appendChild(back);
+                requestAnimationFrame(() => back.classList.add('open'));
+                const input = back.querySelector('input');
+                (input || back.querySelector('.oc-dialog-ok')).focus();
+                if (input) input.select();
+                const close = result => {
+                    document.removeEventListener('keydown', onKey, true);
+                    back.remove();
+                    if (prev && prev.focus) prev.focus();
+                    resolve(result);
+                };
+                const ok = () => close(isPrompt ? input.value : true);
+                const cancel = () => close(isPrompt ? null : false);
+                function onKey(e) {
+                    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cancel(); }
+                    if (e.key === 'Enter' && (isPrompt || document.activeElement !== back.querySelector('.oc-dialog-cancel'))) { e.preventDefault(); e.stopPropagation(); ok(); }
+                }
+                document.addEventListener('keydown', onKey, true);
+                back.querySelector('.oc-dialog-ok').addEventListener('click', ok);
+                back.querySelector('.oc-dialog-cancel').addEventListener('click', cancel);
+                back.addEventListener('click', e => { if (e.target === back) cancel(); });
+            });
+        }
+        function ocConfirm(message, opts = {}) {
+            const danger = /verwijder|wissen/i.test(message);
+            return ocDialog({ message, danger, okText: opts.ok || (danger ? (/wissen/i.test(message) ? 'Wis alles' : 'Verwijder') : 'OK') });
+        }
+        function ocPrompt(label, value = '') {
+            return ocDialog({ label: label.replace(/:\s*$/, ''), value: value == null ? '' : String(value), okText: 'Bewaar' });
+        }
+    </script>
+
     <div class="app">
         <!-- Header Banner -->
         <div class="header-banner">
+            <a href="https://onderconstructie.github.io/reset/" class="back-link oc-back" aria-label="Terug naar Reset">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Reset</span>
+            </a>
             <div class="logo" id="logo-home">
                 <div class="logo-mark">
                     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2100,8 +2214,8 @@
                         <svg class="progress-ring" width="216" height="216" viewBox="0 0 216 216">
                             <defs>
                                 <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#E8B800"/>
-                                    <stop offset="100%" style="stop-color:#C99A00"/>
+                                    <stop offset="0%" style="stop-color:#34d399"/>
+                                    <stop offset="100%" style="stop-color:#059669"/>
                                 </linearGradient>
                             </defs>
                             <circle class="ring-bg" cx="108" cy="108" r="104"/>
@@ -2436,6 +2550,10 @@
         </div>
     </div>
 
+    <footer class="footer oc-footer">
+        <p class="quote oc-quote">Mildheid begint bij jezelf.</p>
+    </footer>
+
     <script>
         const $ = id => document.getElementById(id);
         const $$ = sel => document.querySelectorAll(sel);
@@ -2612,8 +2730,8 @@
             // Start de bol op kleinste grootte zodat inademen meteen begint met groeien
             const circle = $('breath-circle');
             circle.style.transform = 'scale(0.7)';
-            circle.style.background = 'linear-gradient(145deg, rgba(201, 154, 0, 0.04), rgba(166, 124, 0, 0.024))';
-            circle.style.boxShadow = '0 0 0 1px rgba(201, 154, 0, 0.02), 0 15px 34px rgba(201, 154, 0, 0.032)';
+            circle.style.background = 'linear-gradient(145deg, rgba(5, 150, 105, 0.04), rgba(4, 120, 87, 0.024))';
+            circle.style.boxShadow = '0 0 0 1px rgba(5, 150, 105, 0.02), 0 15px 34px rgba(5, 150, 105, 0.032)';
             
             STATE.breathStartTime = Date.now();
             showIntention(STATE.currentIntention);
@@ -2855,8 +2973,8 @@
             
             // Apply styles
             circle.style.transform = `scale(${scale})`;
-            circle.style.background = `linear-gradient(145deg, rgba(201, 154, 0, ${bgOpacity}), rgba(166, 124, 0, ${bgOpacity * 0.6}))`;
-            circle.style.boxShadow = `0 0 0 1px rgba(201, 154, 0, ${bgOpacity * 0.5}), 0 ${8 + scale * 10}px ${20 + scale * 20}px rgba(201, 154, 0, ${bgOpacity * 0.8})`;
+            circle.style.background = `linear-gradient(145deg, rgba(5, 150, 105, ${bgOpacity}), rgba(4, 120, 87, ${bgOpacity * 0.6}))`;
+            circle.style.boxShadow = `0 0 0 1px rgba(5, 150, 105, ${bgOpacity * 0.5}), 0 ${8 + scale * 10}px ${20 + scale * 20}px rgba(5, 150, 105, ${bgOpacity * 0.8})`;
             
             $('breath-phase-text').textContent = phaseText;
         }
@@ -3067,8 +3185,8 @@
         $('day-modal-close').addEventListener('click', () => $('day-modal').classList.remove('visible'));
 
         // Clear data
-        $('clear-data').addEventListener('click', () => {
-            if (confirm('Weet je zeker dat je alle sessies wilt wissen? Dit kan niet ongedaan worden gemaakt.')) {
+        $('clear-data').addEventListener('click', async () => {
+            if (await ocConfirm('Weet je zeker dat je alle sessies wilt wissen? Dit kan niet ongedaan worden gemaakt.')) {
                 STATE.entries = [];
                 localStorage.removeItem('lk_entries');
                 renderCalendar();
@@ -3211,13 +3329,13 @@
                             const opacity = opacities[m - 1];
                             return `
                                 <div class="mood-bar-container">
-                                    <div class="mood-bar" style="height: ${height}px; background: rgba(212, 160, 0, ${opacity});"></div>
+                                    <div class="mood-bar" style="height: ${height}px; background: rgba(16, 185, 129, ${opacity});"></div>
                                     <div class="mood-bar-label">${count}</div>
                                 </div>
                             `;
                         }).join('')}
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; padding: 0 4px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.6875rem; color: var(--text-muted); margin-top: 4px; padding: 0 4px;">
                         <span>Zwaar</span>
                         <span>Stralend</span>
                     </div>
@@ -3362,15 +3480,15 @@
                             if (d.avg === null) {
                                 return `<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
                                     <div style="width: 100%; height: 4px; background: var(--border); border-radius: 2px;"></div>
-                                    <span style="font-size: 0.6rem; color: var(--text-muted); margin-top: 6px;">${d.day}</span>
+                                    <span style="font-size: 0.6875rem; color: var(--text-muted); margin-top: 6px;">${d.day}</span>
                                 </div>`;
                             }
                             const height = (d.avg / 5) * 50;
                             const moodIndex = Math.round(d.avg) - 1;
                             const opacity = opacities[moodIndex] || 0.65;
                             return `<div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-                                <div style="width: 100%; height: ${height}px; background: rgba(212, 160, 0, ${opacity}); border-radius: 4px 4px 0 0;"></div>
-                                <span style="font-size: 0.6rem; color: var(--text-muted); margin-top: 6px;">${d.day}</span>
+                                <div style="width: 100%; height: ${height}px; background: rgba(16, 185, 129, ${opacity}); border-radius: 4px 4px 0 0;"></div>
+                                <span style="font-size: 0.6875rem; color: var(--text-muted); margin-top: 6px;">${d.day}</span>
                             </div>`;
                         }).join('')}
                     </div>
@@ -3386,7 +3504,7 @@
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="width: 70px; font-size: 0.75rem; color: var(--text-soft);">${MOODS[m-1].label}</span>
                                 <div style="flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;">
-                                    <div style="width: ${pct}%; height: 100%; background: rgba(212, 160, 0, ${opacity}); border-radius: 4px;"></div>
+                                    <div style="width: ${pct}%; height: 100%; background: rgba(16, 185, 129, ${opacity}); border-radius: 4px;"></div>
                                 </div>
                                 <span style="width: 30px; font-size: 0.75rem; color: var(--text-muted); text-align: right;">${count}</span>
                             </div>
