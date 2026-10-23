@@ -14,20 +14,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox=&quot;0 0 40 40&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E %3Ccircle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;18&quot; fill=&quot;%23d1fae5&quot; stroke=&quot;%2310b981&quot; stroke-width=&quot;2&quot;/%3E %3Cpath d=&quot;M20 28.5C20 28.5 11 23 11 16C11 13.5 12.5 11.5 15 11.5C17 11.5 18.5 12.5 20 14.5C21.5 12.5 23 11.5 25 11.5C27.5 11.5 29 13.5 29 16C29 23 20 28.5 20 28.5Z&quot; fill=&quot;%2310b981&quot; stroke=&quot;%23047857&quot; stroke-width=&quot;1.5&quot; stroke-linejoin=&quot;round&quot;/%3E %3C/svg%3E"><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox=&quot;0 0 40 40&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E %3Ccircle cx=&quot;20&quot; cy=&quot;20&quot; r=&quot;18&quot; fill=&quot;%23d1fae5&quot; stroke=&quot;%2310b981&quot; stroke-width=&quot;2&quot;/%3E %3Cpath d=&quot;M20 28.5C20 28.5 11 23 11 16C11 13.5 12.5 11.5 15 11.5C17 11.5 18.5 12.5 20 14.5C21.5 12.5 23 11.5 25 11.5C27.5 11.5 29 13.5 29 16C29 23 20 28.5 20 28.5Z&quot; fill=&quot;%2310b981&quot; stroke=&quot;%23047857&quot; stroke-width=&quot;1.5&quot; stroke-linejoin=&quot;round&quot;/%3E %3C/svg%3E">
     <style>
         :root {
             --bg: #f8fafc;
             --surface: #FFFFFF;
             --border: #e2e8f0;
             --accent: #10b981;
-            --accent-hover: #059669;
+            --accent-hover: #065f46;
+            --accent-text: #047857;
+            --accent-strong: #047857;
             --accent-light: rgba(16, 185, 129, 0.08);
             --accent-medium: rgba(16, 185, 129, 0.15);
             --accent-glow: rgba(16, 185, 129, 0.25);
             --text: #1e293b;
             --text-soft: #475569;
-            --text-muted: #94a3b8;
+            --text-muted: #64748b;
+            --icon-muted: #94a3b8;
             
             /* Mood heatmap colors - 5 levels */
             --mood-1: rgba(16, 185, 129, 0.12);
@@ -44,13 +47,13 @@
             -webkit-tap-highlight-color: rgba(5, 150, 105, 0.2);
         }
 
-        button:focus,
-        input:focus {
-            outline: none;
+        :focus-visible {
+            outline: 2px solid #047857;
+            outline-offset: 2px;
         }
 
-        button:focus-visible {
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3);
+        .sr {
+            position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
         }
 
         html {
@@ -80,10 +83,8 @@
         .header-banner {
             background: #ffffff;
             border-bottom: 1px solid #e2e8f0;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 2.25rem 1.25rem 1.5rem;
+            text-align: center;
             position: relative;
         }
 
@@ -97,39 +98,48 @@
 
         .logo {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            cursor: pointer;
         }
 
         .logo-mark {
-            width: 32px;
-            height: 32px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #f0fdf4;
+            border: 2px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 0.5rem;
         }
 
         .logo-mark svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             fill: #10b981;
         }
 
         .logo-text {
-            font-size: 1.1rem;
+            font-size: 1.625rem;
             font-weight: 700;
             color: #1e293b;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .logo-sub {
+            font-size: 0.9375rem;
+            color: #64748b;
+            margin-top: 0.25rem;
         }
 
         .banner-info-btn {
             position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 32px;
-            height: 32px;
+            right: 12px;
+            top: 12px;
+            width: 44px;
+            height: 44px;
             border: none;
             background: #f1f5f9;
             border-radius: 50%;
@@ -143,17 +153,17 @@
 
         .banner-info-btn:hover {
             background: #e2e8f0;
-            color: #10b981;
+            color: #047857;
         }
 
         .oc-back {
-            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-            display: flex; align-items: center; gap: 0.375rem; padding: 6px 8px; border-radius: 8px;
-            font-size: 0.875rem; color: #94a3b8; text-decoration: none; transition: color 0.2s; z-index: 1;
+            position: absolute; left: 12px; top: 12px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 44px; min-width: 44px; padding: 0 8px; border-radius: 8px;
+            font-size: 0.875rem; color: #64748b; text-decoration: none; transition: color 0.2s; z-index: 1;
         }
-        .oc-back:hover { color: #10b981; }
+        .oc-back:hover { color: #047857; }
         .oc-back svg { width: 16px; height: 16px; }
-        @media (max-width: 480px) { .oc-back span { display: none; } }
+        @media (max-width: 480px) { .oc-back span { display: none; } .header-banner { padding-top: 3.5rem; } }
 
         .banner-info-btn svg {
             width: 18px;
@@ -183,6 +193,7 @@
         }
 
         .nav-btn {
+            min-height: 44px;
             padding: 10px 24px;
             border: none;
             background: transparent;
@@ -201,7 +212,7 @@
         }
 
         .nav-btn:hover:not(.active) {
-            color: var(--accent);
+            color: var(--accent-text);
             background: var(--accent-light);
         }
 
@@ -213,9 +224,9 @@
         .info-tooltip {
             position: absolute;
             top: 100%;
-            right: 16px;
-            margin-top: 8px;
-            width: 320px;
+            right: 12px;
+            margin-top: -4px;
+            width: min(320px, calc(100% - 24px));
             background: white;
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -322,7 +333,7 @@
         .info-disclaimer p {
             font-size: 0.75rem;
             line-height: 1.5;
-            color: #cbd5e1;
+            color: #64748b;
             margin: 0;
         }
 
@@ -343,6 +354,7 @@
             font-weight: 600;
             color: var(--text-soft);
             text-decoration: none;
+            min-height: 44px;
             padding: 8px 14px;
             border-radius: 10px;
             transition: all 0.2s;
@@ -350,7 +362,7 @@
 
         .info-footer-link:hover {
             background: white;
-            color: var(--accent);
+            color: var(--accent-text);
         }
 
         .info-footer-link svg {
@@ -371,7 +383,7 @@
         }
 
         .info-footer-link.primary:hover {
-            color: var(--accent);
+            color: var(--accent-text);
             background: var(--accent-light);
         }
 
@@ -430,7 +442,6 @@
             transform: scale(0.7);
             transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            outline: none;
         }
 
         .breath-circle:hover {
@@ -439,13 +450,6 @@
                 0 15px 40px rgba(16, 185, 129, 0.08);
         }
 
-        .breath-circle:focus {
-            outline: none;
-        }
-
-        .breath-circle:focus-visible {
-            outline: none;
-        }
 
         .breath-circle.active {
             /* Animation controlled by JavaScript for sync */
@@ -559,7 +563,7 @@
         .breath-phase-text {
             font-size: 0.9rem;
             font-weight: 700;
-            background: linear-gradient(145deg, #10b981 0%, #047857 100%);
+            background: linear-gradient(145deg, #047857 0%, #065f46 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -616,7 +620,9 @@
             transform: translateY(8px);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            white-space: nowrap;
+            white-space: normal;
+            text-wrap: balance;
+            overflow-wrap: anywhere;
         }
 
         .intention-text.visible {
@@ -626,7 +632,7 @@
 
         .intention-text .keyword {
             font-weight: 700;
-            background: linear-gradient(135deg, #10b981, #047857);
+            background: linear-gradient(135deg, #047857, #065f46);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -635,30 +641,44 @@
         /* Progress dots */
         .progress-dots {
             display: flex;
-            gap: 10px;
-            margin-top: 24px;
+            gap: 0;
+            margin-top: 12px;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 4px;
-            background: var(--border);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: 0;
+            background: none;
             cursor: pointer;
         }
 
-        .dot:hover {
+        .dot::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+            background: var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dot:hover::before {
             background: var(--accent-medium);
         }
 
-        .dot.active {
+        .dot.active::before {
             background: var(--accent);
             width: 28px;
             box-shadow: 0 2px 12px var(--accent-glow);
         }
 
-        .dot.done {
+        .dot.done::before {
             background: var(--accent);
         }
 
@@ -685,6 +705,7 @@
         }
 
         .recipient-chip {
+            min-height: 44px;
             padding: 10px 20px;
             border: 1.5px solid var(--border);
             background: white;
@@ -698,12 +719,12 @@
 
         .recipient-chip:hover {
             border-color: var(--accent);
-            color: var(--accent);
+            color: var(--accent-text);
         }
 
         .recipient-chip.active {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: var(--accent-strong);
+            border-color: var(--accent-strong);
             color: white;
             box-shadow: 0 2px 12px var(--accent-glow);
         }
@@ -731,6 +752,8 @@
         }
 
         .recipient-input {
+            min-height: 44px;
+            min-width: 0;
             padding: 10px 16px;
             border: 1.5px solid var(--border);
             border-radius: 12px;
@@ -747,9 +770,11 @@
         }
 
         .recipient-confirm {
+            min-height: 44px;
+            min-width: 44px;
             padding: 10px 16px;
             border: none;
-            background: var(--accent);
+            background: var(--accent-strong);
             color: white;
             border-radius: 12px;
             font-size: 0.85rem;
@@ -770,7 +795,7 @@
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--accent);
+            color: var(--accent-text);
             text-align: center;
         }
 
@@ -789,6 +814,7 @@
 
         .btn {
             min-width: 180px;
+            min-height: 44px;
             padding: 16px 36px;
             border: none;
             border-radius: 50px;
@@ -806,7 +832,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
+            background: var(--accent-strong);
             color: white;
             box-shadow: 
                 0 4px 16px var(--accent-glow),
@@ -817,10 +843,11 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 60%);
         }
 
         .btn-primary:hover {
+            background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 
                 0 8px 24px var(--accent-glow),
@@ -833,7 +860,7 @@
 
         .btn-secondary {
             background: white;
-            color: var(--accent);
+            color: var(--accent-text);
             border: 2px solid var(--border);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
@@ -953,7 +980,6 @@
             height: 6px;
             background: linear-gradient(90deg, var(--border) 0%, var(--accent-light) 50%, var(--accent) 100%);
             border-radius: 3px;
-            outline: none;
             cursor: pointer;
         }
 
@@ -1085,8 +1111,8 @@
         }
 
         .btn-icon-small {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border: 1px solid var(--border);
             background: white;
             border-radius: 12px;
@@ -1105,7 +1131,7 @@
         .btn-icon-small svg {
             width: 18px;
             height: 18px;
-            fill: var(--text-muted);
+            fill: var(--icon-muted);
             transition: fill 0.2s;
         }
 
@@ -1119,8 +1145,8 @@
         }
 
         .calendar-nav button {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border: 1px solid var(--border);
             background: white;
             border-radius: 12px;
@@ -1224,7 +1250,7 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 0.6875rem;
-            color: var(--accent);
+            color: #064e3b;
             font-weight: 700;
         }
 
@@ -1237,6 +1263,10 @@
         }
 
         .stat {
+            font: inherit;
+            color: inherit;
+            width: 100%;
+            min-width: 0;
             background: white;
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -1271,6 +1301,7 @@
         }
 
         .stat-label {
+            overflow-wrap: anywhere;
             font-size: 0.6875rem;
             color: var(--text-muted);
             margin-top: 8px;
@@ -1299,7 +1330,7 @@
 
         .analytics-btn:hover {
             border-color: var(--accent);
-            color: var(--accent);
+            color: var(--accent-text);
             background: var(--accent-light);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -1342,6 +1373,18 @@
             width: 16px;
             height: 16px;
             border-radius: 4px;
+        }
+
+        @media (max-width: 400px) {
+            .calendar-view { padding: 16px 12px; }
+            .calendar { padding: 12px 8px; }
+            .stats { gap: 8px; }
+            .stat { padding: 16px 6px; }
+            .calendar-title { font-size: 1.05rem; }
+            .calendar-actions { gap: 6px; }
+            .meditation-stage { padding: 20px 12px 28px; }
+            .modal-backdrop { padding: 12px; }
+            .modal { padding: 20px; }
         }
 
         /* Modal */
@@ -1396,8 +1439,9 @@
         }
 
         .modal-close-x {
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
             border: none;
             background: var(--bg);
             border-radius: 8px;
@@ -1415,7 +1459,7 @@
         .modal-close-x svg {
             width: 16px;
             height: 16px;
-            fill: var(--text-muted);
+            fill: #64748b;
         }
 
         .modal-entries {
@@ -1501,7 +1545,7 @@
         .highlight-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--accent);
+            color: var(--accent-text);
         }
 
         .highlight-label {
@@ -1567,7 +1611,7 @@
         .streak-days {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--accent);
+            color: var(--accent-text);
         }
 
         .streak-item.current {
@@ -1718,6 +1762,7 @@
 
         .setting-input {
             width: 56px;
+            min-height: 44px;
             padding: 8px 10px;
             border: 1.5px solid var(--border);
             border-radius: 10px;
@@ -1792,7 +1837,7 @@
         }
 
         .breath-total strong {
-            color: var(--accent);
+            color: var(--accent-text);
             font-weight: 700;
         }
 
@@ -1816,7 +1861,7 @@
 
         .btn-reset:hover {
             background: var(--bg);
-            border-color: var(--text-muted);
+            border-color: var(--icon-muted);
         }
 
         /* Pause indicator */
@@ -1850,8 +1895,9 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+            padding: 24px 16px;
             z-index: 200;
+            overflow-y: auto;
         }
 
         .privacy-backdrop.visible {
@@ -1861,6 +1907,7 @@
         .privacy-modal {
             background: white;
             border-radius: 28px;
+            margin: auto;
             width: 100%;
             max-width: 380px;
             overflow: hidden;
@@ -1874,7 +1921,7 @@
         }
 
         .privacy-header {
-            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
+            background: linear-gradient(145deg, #047857 0%, #065f46 100%);
             padding: 32px 28px 28px;
             text-align: center;
             position: relative;
@@ -1979,7 +2026,7 @@
             padding: 16px 24px;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(145deg, #34d399 0%, #059669 100%);
+            background: var(--accent-strong);
             color: white;
             font-size: 1rem;
             font-weight: 600;
@@ -1994,7 +2041,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 60%);
         }
 
         .privacy-accept-btn:hover {
@@ -2009,12 +2056,12 @@
         .privacy-note {
             text-align: center;
             margin-top: 14px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
         .privacy-note a {
-            color: var(--accent);
+            color: var(--accent-text);
             text-decoration: none;
             font-weight: 600;
         }
@@ -2040,15 +2087,15 @@
         .oc-dialog-label { display: block; font-size: 0.875rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem; }
         .oc-dialog-input {
             width: 100%; padding: 0.6875rem 0.875rem; border: 1.5px solid #e2e8f0; border-radius: 10px; font: inherit;
-            font-size: 1rem; color: #1e293b; outline: none; background: #f8fafc;
+            font-size: 1rem; color: #1e293b; background: #f8fafc;
         }
-        .oc-dialog-input:focus { border-color: #10b981; background: #ffffff; }
+        .oc-dialog-input:focus { border-color: #047857; background: #ffffff; }
         .oc-dialog-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
-        .oc-dialog-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; padding: 0.625rem 1rem; border-radius: 10px; border: 0; cursor: pointer; }
+        .oc-dialog-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; min-height: 44px; padding: 0.625rem 1rem; border-radius: 10px; border: 0; cursor: pointer; }
         .oc-dialog-cancel { background: #f1f5f9; color: #475569; }
         .oc-dialog-cancel:hover { background: #e2e8f0; }
-        .oc-dialog-ok { background: #10b981; color: #ffffff; }
-        .oc-dialog-ok:hover { background: #059669; }
+        .oc-dialog-ok { background: #047857; color: #ffffff; }
+        .oc-dialog-ok:hover { background: #065f46; }
         .oc-dialog-ok.danger { background: #ef4444; }
         .oc-dialog-ok.danger:hover { background: #dc2626; }
     
@@ -2059,13 +2106,13 @@
             margin-top: 2rem;
             border-top: 1px solid #e2e8f0;
             background: #ffffff;
-            color: #10b981;
+            color: #047857;
         }
 
         footer.oc-footer .oc-quote {
             font-size: 0.8125rem;
             line-height: 1.5;
-            color: #10b981;
+            color: #047857;
             opacity: 1;
             font-style: normal;
             margin: 0;
@@ -2127,17 +2174,18 @@
     <div class="app">
         <!-- Header Banner -->
         <div class="header-banner">
-            <a href="https://onderconstructie.github.io/reset/" class="back-link oc-back" aria-label="Terug naar Reset">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+             <a href="https://onderconstructie.github.io/reset/" class="back-link oc-back" aria-label="Terug naar Reset">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                 <span>Reset</span>
             </a>
             <div class="logo" id="logo-home">
-                <div class="logo-mark">
+                <div class="logo-mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </div>
-                <span class="logo-text">Hartmeditatie</span>
+                <h1 class="logo-text">Hartmeditatie</h1>
+                <p class="logo-sub">Vriendelijke wensen, voor jezelf of een ander</p>
             </div>
-            <button class="banner-info-btn" id="info-btn" title="Over deze app">
+            <button class="banner-info-btn" id="info-btn" title="Over deze app" aria-label="Over deze app en instellingen" aria-expanded="false" aria-controls="info-tooltip">
                 <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
             <div class="info-tooltip" id="info-tooltip">
@@ -2216,7 +2264,7 @@
         <div id="meditate-view" class="view active">
             <div class="meditation-view">
                 <div class="meditation-stage">
-                    <div class="breath-circle" id="breath-circle" tabindex="-1">
+                    <div class="breath-circle" id="breath-circle" tabindex="0" role="button" aria-label="Start of pauzeer de meditatie">
                         <svg class="progress-ring" width="216" height="216" viewBox="0 0 216 216">
                             <defs>
                                 <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2241,16 +2289,16 @@
                     </div>
 
                     <div class="intention-display">
-                        <p class="intention-text visible" id="intention-text">
+                        <p class="intention-text visible" id="intention-text" aria-live="polite">
                             Dat ik me <span class="keyword">veilig</span> mag voelen
                         </p>
                     </div>
 
                     <div class="progress-dots" id="progress-dots">
-                        <div class="dot active" data-index="0"></div>
-                        <div class="dot" data-index="1"></div>
-                        <div class="dot" data-index="2"></div>
-                        <div class="dot" data-index="3"></div>
+                        <button type="button" class="dot active" data-index="0" aria-label="Wens 1"></button>
+                        <button type="button" class="dot" data-index="1" aria-label="Wens 2"></button>
+                        <button type="button" class="dot" data-index="2" aria-label="Wens 3"></button>
+                        <button type="button" class="dot" data-index="3" aria-label="Wens 4"></button>
                     </div>
 
                     <!-- New recipient selector - visible from start -->
@@ -2261,7 +2309,7 @@
                             <button class="recipient-chip" data-recipient="other">Iemand anders</button>
                         </div>
                         <div class="recipient-custom" id="recipient-custom">
-                            <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam...">
+                            <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam..." aria-label="Naam van wie je iets toewenst" maxlength="40" autocomplete="off">
                             <button class="recipient-confirm" id="recipient-confirm">OK</button>
                         </div>
                         <div class="recipient-name-display" id="recipient-name-display"></div>
@@ -2294,7 +2342,7 @@
                     
                     <div class="mood-slider-container">
                         <div class="slider-track">
-                            <input type="range" min="1" max="5" value="3" class="mood-slider" id="mood-slider">
+                            <input type="range" min="1" max="5" value="3" class="mood-slider" id="mood-slider" aria-label="Hoe voel je je, van zwaar tot stralend" aria-valuetext="Goed">
                         </div>
                         <div class="slider-labels">
                             <span class="slider-label">Zwaar</span>
@@ -2329,10 +2377,10 @@
                             <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                         </button>
                         <div class="calendar-nav">
-                            <button id="prev-month">
+                            <button id="prev-month" aria-label="Vorige maand">
                                 <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
                             </button>
-                            <button id="next-month">
+                            <button id="next-month" aria-label="Volgende maand">
                                 <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
                             </button>
                         </div>
@@ -2370,9 +2418,9 @@
                         <div class="stat-value" id="stat-total">0</div>
                         <div class="stat-label">Sessies</div>
                     </div>
-                    <div class="stat" id="stat-streak-card" title="Bekijk streak historie">
+                    <div class="stat" id="stat-streak-card" title="Bekijk je reeksen">
                         <div class="stat-value" id="stat-streak">0</div>
-                        <div class="stat-label">Streak</div>
+                        <div class="stat-label">Op rij</div>
                     </div>
                     <div class="stat" id="stat-mood-card" title="Bekijk stemming analyse">
                         <div class="stat-value" id="stat-mood">—</div>
@@ -2391,13 +2439,13 @@
 
     <!-- Day Modal -->
     <div class="modal-backdrop" id="day-modal">
-        <div class="modal">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <div class="modal-header">
                 <div>
                     <h3 class="modal-title" id="modal-title">Sessies</h3>
                     <p class="modal-date" id="modal-date"></p>
                 </div>
-                <button class="modal-close-x" id="day-modal-close">
+                <button class="modal-close-x" id="day-modal-close" aria-label="Sluiten">
                     <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
             </div>
@@ -2414,7 +2462,7 @@
                     <h3 class="modal-title">Statistieken</h3>
                     <p class="modal-date" id="analytics-subtitle">Jouw voortgang</p>
                 </div>
-                <button class="modal-close-x" id="analytics-modal-close">
+                <button class="modal-close-x" id="analytics-modal-close" aria-label="Sluiten">
                     <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
             </div>
@@ -2435,7 +2483,7 @@
                     <h3 class="modal-title">Instellingen</h3>
                     <p class="modal-date">Ademhalingsritme</p>
                 </div>
-                <button class="modal-close-x" id="settings-modal-close">
+                <button class="modal-close-x" id="settings-modal-close" aria-label="Sluiten">
                     <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
             </div>
@@ -2448,7 +2496,7 @@
                             <span class="setting-label-sub">Rustig lucht opnemen</span>
                         </div>
                         <div class="setting-input-wrap">
-                            <input type="number" class="setting-input" id="setting-inhale" min="2" max="10" value="4">
+                            <input type="number" class="setting-input" id="setting-inhale" min="2" max="10" value="4" aria-label="Inademen, in seconden">
                             <span class="setting-unit">sec</span>
                         </div>
                     </div>
@@ -2459,7 +2507,7 @@
                             <span class="setting-label-sub">Even stilstaan</span>
                         </div>
                         <div class="setting-input-wrap">
-                            <input type="number" class="setting-input" id="setting-hold" min="0" max="10" value="6">
+                            <input type="number" class="setting-input" id="setting-hold" min="0" max="10" value="6" aria-label="Vasthouden, in seconden">
                             <span class="setting-unit">sec</span>
                         </div>
                     </div>
@@ -2470,7 +2518,7 @@
                             <span class="setting-label-sub">Langzaam loslaten</span>
                         </div>
                         <div class="setting-input-wrap">
-                            <input type="number" class="setting-input" id="setting-exhale" min="2" max="12" value="6">
+                            <input type="number" class="setting-input" id="setting-exhale" min="2" max="12" value="6" aria-label="Uitademen, in seconden">
                             <span class="setting-unit">sec</span>
                         </div>
                     </div>
@@ -2572,11 +2620,33 @@
             { label: 'Stralend', desc: 'Vol liefde en vreugde', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><path d="M9 9.5c.5-.5 1-.5 1.5 0"/><path d="M13.5 9.5c.5-.5 1-.5 1.5 0"/></svg>' }
         ];
 
+        // Opslag: kapotte of geblokkeerde opslag mag de pagina nooit stilleggen.
+        function load(k, d) {
+            try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; }
+        }
+        function save(k, v) {
+            try { localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); return true; } catch (e) { return false; }
+        }
+        function esc(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        const clampInt = (v, min, max, d) => { const n = parseInt(v, 10); return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : d; };
+
         const DEFAULT_BREATH = { inhale: 4, hold: 6, exhale: 6 };
-        const savedBreath = JSON.parse(localStorage.getItem('lk_breath') || 'null') || DEFAULT_BREATH;
+        const rawBreath = load('lk_breath', null);
+        const savedBreath = (rawBreath && typeof rawBreath === 'object') ? {
+            inhale: clampInt(rawBreath.inhale, 2, 10, DEFAULT_BREATH.inhale),
+            hold: clampInt(rawBreath.hold, 0, 10, DEFAULT_BREATH.hold),
+            exhale: clampInt(rawBreath.exhale, 2, 12, DEFAULT_BREATH.exhale)
+        } : DEFAULT_BREATH;
+        const rawEntries = load('lk_entries', []);
+        const savedEntries = (Array.isArray(rawEntries) ? rawEntries : []).filter(e =>
+            e && typeof e === 'object' && Number.isInteger(e.mood) && e.mood >= 1 && e.mood <= 5 &&
+            typeof e.date === 'string' && !isNaN(new Date(e.date).getTime())
+        ).map(e => ({ ...e, recipient: typeof e.recipient === 'string' ? e.recipient.slice(0, 40) : 'ik' }));
 
         const STATE = {
-            entries: JSON.parse(localStorage.getItem('lk_entries') || '[]'),
+            entries: savedEntries,
             recipient: 'ik',
             customRecipient: '',
             currentIntention: 0,
@@ -2606,10 +2676,10 @@
                 ];
             } else {
                 return [
-                    { text: `Dat ${recipient} zich <span class="keyword">veilig</span> mag voelen` },
-                    { text: `Dat ${recipient} zich <span class="keyword">gelukkig</span> mag voelen` },
-                    { text: `Dat ${recipient} zich <span class="keyword">gezond</span> mag voelen` },
-                    { text: `Dat ${recipient} met <span class="keyword">gemak</span> mag leven` }
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">veilig</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gelukkig</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gezond</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} met <span class="keyword">gemak</span> mag leven` }
                 ];
             }
         }
@@ -2626,12 +2696,14 @@
         // Info button - toggle tooltip
         $('info-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-            $('info-tooltip').classList.toggle('visible');
+            const open = $('info-tooltip').classList.toggle('visible');
+            $('info-btn').setAttribute('aria-expanded', open);
         });
 
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.banner-info-btn') && !e.target.closest('.info-tooltip')) {
                 $('info-tooltip').classList.remove('visible');
+                $('info-btn').setAttribute('aria-expanded', 'false');
             }
         });
 
@@ -2692,6 +2764,9 @@
         // Meditation
         $('start-btn').addEventListener('click', toggleMeditation);
         $('breath-circle').addEventListener('click', toggleCircle);
+        $('breath-circle').addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCircle(); }
+        });
 
         function toggleCircle() {
             // Bol = start / pauze / hervat
@@ -2723,7 +2798,7 @@
 
             $('start-btn').innerHTML = `
                 <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                Skip
+                Overslaan
             `;
             
             $('heart-icon').style.display = 'none';
@@ -3030,7 +3105,7 @@
 
         // Mood slider
         $('mood-slider').addEventListener('input', (e) => {
-            STATE.selectedMood = parseInt(e.target.value);
+            STATE.selectedMood = clampInt(e.target.value, 1, 5, 3);
             updateMoodDisplay();
         });
 
@@ -3039,6 +3114,7 @@
             $('mood-emoji').innerHTML = mood.icon;
             $('mood-label-main').textContent = mood.label;
             $('mood-label-sub').textContent = mood.desc;
+            $('mood-slider').setAttribute('aria-valuetext', mood.label);
         }
 
         // Save
@@ -3051,7 +3127,7 @@
             };
 
             STATE.entries.push(entry);
-            localStorage.setItem('lk_entries', JSON.stringify(STATE.entries));
+            save('lk_entries', STATE.entries);
 
             $('rating-view').classList.remove('active');
             $('success-view').classList.add('active');
@@ -3107,7 +3183,11 @@
 
                 const day = createDay(i, false, isToday, dayEntries);
                 if (dayEntries.length > 0) {
+                    day.setAttribute('role', 'button');
+                    day.setAttribute('tabindex', '0');
+                    day.setAttribute('aria-label', `${i} ${title}: ${dayEntries.length} ${dayEntries.length === 1 ? 'sessie' : 'sessies'}`);
                     day.addEventListener('click', () => showDayModal(dateStr, dayEntries));
+                    day.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDayModal(dateStr, dayEntries); } });
                 }
                 container.appendChild(day);
             }
@@ -3169,7 +3249,7 @@
 
             $('modal-entries').innerHTML = entries.map(e => {
                 const time = new Date(e.date).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
-                const recipientText = e.recipient === 'ik' ? 'Voor mezelf' : `Voor ${e.recipient}`;
+                const recipientText = e.recipient === 'ik' ? 'Voor mezelf' : `Voor ${esc(e.recipient)}`;
                 return `
                     <div class="modal-entry">
                         <div>
@@ -3314,7 +3394,7 @@
                 <div class="analytics-highlight">
                     <div class="highlight-card">
                         <div class="highlight-value">${longestStreak}</div>
-                        <div class="highlight-label">Langste streak</div>
+                        <div class="highlight-label">Langste reeks</div>
                     </div>
                     <div class="highlight-card">
                         <div class="highlight-value">${bestDay}</div>
@@ -3346,8 +3426,8 @@
                 </div>
 
                 <div style="display: flex; gap: 16px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);">
-                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" onclick="showAnalytics('sessions')">Alle sessies</button>
-                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" onclick="showAnalytics('streaks')">Streaks</button>
+                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" data-analytics="sessions">Alle sessies</button>
+                    <button class="btn btn-secondary" style="flex: 1; min-width: auto; padding: 12px 16px; font-size: 0.85rem;" data-analytics="streaks">Reeksen</button>
                 </div>
             `;
         }
@@ -3368,7 +3448,7 @@
             });
 
             let html = `
-                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" onclick="showAnalytics('overview')">
+                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" data-analytics="overview">
                     ← Terug naar overzicht
                 </button>
                 <div class="analytics-section">
@@ -3385,7 +3465,7 @@
                 
                 entries.forEach(e => {
                     const time = new Date(e.date).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
-                    const recipientText = e.recipient === 'ik' ? 'Mezelf' : e.recipient;
+                    const recipientText = e.recipient === 'ik' ? 'Mezelf' : esc(e.recipient);
                     html += `
                         <div class="session-item">
                             <span class="session-time">${time}</span>
@@ -3409,15 +3489,15 @@
             const currentStreak = calculateStreak();
 
             let html = `
-                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" onclick="showAnalytics('overview')">
+                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" data-analytics="overview">
                     ← Terug naar overzicht
                 </button>
                 <div class="analytics-section">
-                    <div class="analytics-section-title">Streak historie</div>
+                    <div class="analytics-section-title">Dagen op rij</div>
             `;
 
             if (streaks.length === 0) {
-                html += `<div class="empty-state" style="padding: 20px;"><p>Nog geen streaks opgebouwd.</p></div>`;
+                html += `<div class="empty-state" style="padding: 20px;"><p>Nog geen reeksen opgebouwd.</p></div>`;
             } else {
                 html += `<div class="streak-list">`;
                 streaks.forEach((streak, i) => {
@@ -3462,7 +3542,7 @@
             }
 
             return `
-                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" onclick="showAnalytics('overview')">
+                <button class="btn btn-secondary" style="margin-bottom: 16px; padding: 10px 16px; min-width: auto;" data-analytics="overview">
                     ← Terug naar overzicht
                 </button>
                 
@@ -3583,8 +3663,24 @@
         $('analytics-close').addEventListener('click', () => $('analytics-modal').classList.remove('visible'));
         $('analytics-modal-close').addEventListener('click', () => $('analytics-modal').classList.remove('visible'));
 
-        // Make showAnalytics global for inline onclick
-        window.showAnalytics = showAnalytics;
+        // Knoppen in de statistieken: één luisteraar, geen inline onclick
+        $('analytics-content').addEventListener('click', e => {
+            const b = e.target.closest('[data-analytics]');
+            if (b && ['overview', 'sessions', 'streaks', 'mood'].includes(b.dataset.analytics)) showAnalytics(b.dataset.analytics);
+        });
+        // De statistiektegels zijn divs: bedienbaar maken met het toetsenbord
+        ['stat-sessions', 'stat-streak-card', 'stat-mood-card'].forEach(id => {
+            const el = $(id);
+            el.setAttribute('role', 'button');
+            el.setAttribute('tabindex', '0');
+            el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+        });
+        // Escape sluit open vensters
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            ['day-modal', 'analytics-modal', 'settings-modal'].forEach(id => $(id).classList.remove('visible'));
+            if ($('info-tooltip').classList.contains('visible')) { $('info-tooltip').classList.remove('visible'); $('info-btn').setAttribute('aria-expanded', 'false'); $('info-btn').focus(); }
+        });
 
         // Swipe on intention text
         const intentionDisplay = document.querySelector('.intention-display');
@@ -3732,7 +3828,7 @@
             const exhale = Math.max(2, Math.min(12, parseInt($('setting-exhale').value) || 6));
             
             STATE.breath = { inhale, hold, exhale };
-            localStorage.setItem('lk_breath', JSON.stringify(STATE.breath));
+            save('lk_breath', STATE.breath);
             
             $('settings-modal').classList.remove('visible');
         });
@@ -3749,14 +3845,20 @@
 
         // Privacy modal - show on first visit
         function checkPrivacyConsent() {
-            const hasConsent = localStorage.getItem('lk_privacy_accepted');
+            // In de app (iframe) legt het gegevensscherm van de app de opslag al uit: dan geen welkomstvenster.
+            let inFrame = true;
+            try { inFrame = window.top !== window.self; } catch (e) { inFrame = true; }
+            if (inFrame) return;
+            let hasConsent = null;
+            try { hasConsent = localStorage.getItem('lk_privacy_accepted'); } catch (e) { hasConsent = null; }
             if (!hasConsent) {
                 $('privacy-modal').classList.add('visible');
+                $('privacy-accept').focus();
             }
         }
 
         $('privacy-accept').addEventListener('click', () => {
-            localStorage.setItem('lk_privacy_accepted', 'true');
+            save('lk_privacy_accepted', 'true');
             $('privacy-modal').classList.remove('visible');
         });
 
