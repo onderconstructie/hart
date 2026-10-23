@@ -10,6 +10,7 @@
     <meta name="oc:labels" content="mildheid">
     <meta name="oc:kort" content="Metta: vriendelijke wensen">
     <meta name="oc:volgorde" content="170">
+    <meta name="oc:opslag" content="lk_entries, lk_breath, lk_privacy_accepted">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2324,7 +2325,7 @@
                 <div class="calendar-header">
                     <h2 class="calendar-title" id="calendar-title">Januari 2026</h2>
                     <div class="calendar-actions">
-                        <button class="btn-icon-small" id="clear-data" title="Wis alle data">
+                        <button class="btn-icon-small" id="clear-data" title="Alles wissen en opnieuw beginnen" aria-label="Alles wissen en opnieuw beginnen">
                             <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                         </button>
                         <div class="calendar-nav">
@@ -3191,11 +3192,9 @@
 
         // Clear data
         $('clear-data').addEventListener('click', async () => {
-            if (await ocConfirm('Weet je zeker dat je alle sessies wilt wissen? Dit kan niet ongedaan worden gemaakt.')) {
-                STATE.entries = [];
-                localStorage.removeItem('lk_entries');
-                renderCalendar();
-                updateStats();
+            if (await ocConfirm('Alles wissen en opnieuw beginnen? Je sessies, je ademinstellingen en je akkoord met de lokale opslag worden verwijderd. Dit kan niet ongedaan worden gemaakt.')) {
+                ['lk_entries', 'lk_breath', 'lk_privacy_accepted'].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+                location.reload();
             }
         });
 
