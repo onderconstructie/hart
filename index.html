@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ffffff">
     <title>Hartmeditatie – Onder Constructie</title>
-    <meta name="description" content="Oefen mildheid en compassie met vriendelijke wensen. Geïnspireerd door de boeddhistische Metta meditatie.">
+    <meta name="description" content="Oefen mildheid en compassie met vriendelijke wensen. Geïnspireerd door een oude boeddhistische meditatie van vriendelijkheid.">
     <meta name="oc:groep" content="reset">
     <meta name="oc:labels" content="mildheid">
     <meta name="oc:kort" content="Vriendelijke wensen voor jezelf en anderen">
@@ -103,9 +103,6 @@
         .logo-mark {
             width: 56px;
             height: 56px;
-            border-radius: 50%;
-            background: #f0fdf4;
-            border: 2px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,9 +110,9 @@
         }
 
         .logo-mark svg {
-            width: 28px;
-            height: 28px;
-            fill: #10b981;
+            display: block;
+            width: 56px;
+            height: 56px;
         }
 
         .logo-text {
@@ -154,6 +151,8 @@
             color: #047857;
         }
 
+        button, input, select, textarea { font-family: inherit; }
+
         .oc-back {
             position: absolute; left: 12px; top: 12px;
             display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 44px; min-width: 44px; padding: 0 8px; border-radius: 8px;
@@ -161,7 +160,7 @@
         }
         .oc-back:hover { color: #047857; }
         .oc-back svg { width: 16px; height: 16px; }
-        @media (max-width: 480px) { .oc-back span { display: none; } .header-banner { padding-top: 3.5rem; } }
+        @media (max-width: 480px) { .header-banner { padding-top: 3.5rem; } }
 
         .banner-info-btn svg {
             width: 18px;
@@ -806,9 +805,21 @@
         .controls {
             padding: 20px 24px 36px;
             display: flex;
+            flex-direction: column;
+            gap: 12px;
             justify-content: center;
             align-items: center;
         }
+
+        .start-hint {
+            margin: 0;
+            max-width: 320px;
+            font-size: 0.8125rem;
+            line-height: 1.45;
+            color: #64748b;
+            text-align: center;
+        }
+        .start-hint[hidden] { display: none; }
 
         .btn {
             min-width: 180px;
@@ -1882,191 +1893,6 @@
             background: var(--accent);
             border-radius: 4px;
         }
-
-        /* Privacy/Welcome Modal */
-        .privacy-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px 16px;
-            z-index: 200;
-            overflow-y: auto;
-        }
-
-        .privacy-backdrop.visible {
-            display: flex;
-        }
-
-        .privacy-modal {
-            background: white;
-            border-radius: 28px;
-            margin: auto;
-            width: 100%;
-            max-width: 380px;
-            overflow: hidden;
-            animation: privacyIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 24px 80px rgba(0,0,0,0.25);
-        }
-
-        @keyframes privacyIn {
-            from { opacity: 0; transform: scale(0.92) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .privacy-header {
-            background: linear-gradient(145deg, #047857 0%, #065f46 100%);
-            padding: 32px 28px 28px;
-            text-align: center;
-            position: relative;
-        }
-
-        .privacy-header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .privacy-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-        }
-
-        .privacy-icon svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
-        }
-
-        .privacy-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .privacy-subtitle {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .privacy-body {
-            padding: 24px 28px;
-        }
-
-        .privacy-item {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .privacy-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .privacy-item-icon {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            background: var(--accent-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .privacy-item-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--accent);
-        }
-
-        .privacy-item-icon.green {
-            background: rgba(16, 185, 129, 0.1); /* Gouden achtergrond (transparant) */
-        }
-
-        .privacy-item-icon.green svg {
-            fill: #10b981; /* Goud icoontje */
-        }
-
-        .privacy-item-content h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 2px;
-        }
-
-        .privacy-item-content p {
-            font-size: 0.8rem;
-            color: var(--text-soft);
-            line-height: 1.45;
-            margin: 0;
-        }
-
-        .privacy-footer {
-            padding: 0 28px 28px;
-        }
-
-        .privacy-accept-btn {
-            width: 100%;
-            padding: 16px 24px;
-            border: none;
-            border-radius: 50px;
-            background: var(--accent-strong);
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 16px var(--accent-glow);
-        }
-
-        .privacy-accept-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 60%);
-        }
-
-        .privacy-accept-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--accent-glow);
-        }
-
-        .privacy-accept-btn:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .privacy-note {
-            text-align: center;
-            margin-top: 14px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .privacy-note a {
-            color: var(--accent-text);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .privacy-note a:hover {
-            text-decoration: underline;
-        }
     
         /* Dialoog in de pagina, in plaats van de pop-ups van de browser */
         .oc-dialog-backdrop {
@@ -2172,13 +1998,13 @@
     <div class="app">
         <!-- Header Banner -->
         <div class="header-banner">
-             <a href="https://onderconstructie.github.io/reset/" class="back-link oc-back" aria-label="Terug naar Reset">
+             <a href="../reset/" class="back-link oc-back" aria-label="Terug naar Reset">
                 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                 <span>Reset</span>
             </a>
             <div class="logo" id="logo-home">
                 <div class="logo-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/><path d="M20 29C20 29 11 23.5 11 16.8C11 14 13 12 15.4 12C17.4 12 18.8 13 20 14.8C21.2 13 22.6 12 24.6 12C27 12 29 14 29 16.8C29 23.5 20 29 20 29Z" fill="#10b981"/><path d="M15 16.5 A2.5 2.5 0 0 1 17 14.5" stroke="#ecfdf5" stroke-width="1.6" stroke-linecap="round"/></svg>
                 </div>
                 <h1 class="logo-text">Hartmeditatie</h1>
                 <p class="logo-sub">Vriendelijke wensen, voor jezelf of een ander</p>
@@ -2222,7 +2048,7 @@
 
                         </div>
                         <div class="info-section-content">
-                            <p>Geïnspireerd door de boeddhistische <strong>Metta</strong> meditatie. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
+                            <p>Geïnspireerd door een oude boeddhistische <strong>meditatie van vriendelijkheid</strong>. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
                         </div>
                     </div>
                     <div class="info-section">
@@ -2230,7 +2056,7 @@
                             <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg>
                         </div>
                         <div class="info-section-content">
-                            <p>Onderzoek naar <strong>loving-kindness meditatie</strong> suggereert dat deze training positieve emoties kan versterken en kan bijdragen aan verbondenheid en veerkracht.</p>
+                            <p>Onderzoek naar <strong>deze vorm van meditatie</strong> suggereert dat ze positieve emoties kan versterken en kan bijdragen aan verbondenheid en veerkracht.</p>
                         </div>
                     </div>
                     <div class="info-disclaimer">
@@ -2238,9 +2064,9 @@
                     </div>
                 </div>
                 <div class="info-footer">
-                    <a href="https://bit.ly/4azfO7S" target="_blank" rel="noopener" class="info-footer-link">
-                        <svg viewBox="0 0 24 24" style="fill: var(--accent);"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        Contact
+                    <a href="https://onderconstructie.github.io/" target="_blank" rel="noopener" class="info-footer-link">
+                        <svg viewBox="0 0 24 24" style="fill: var(--accent);"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        Onder Constructie
                     </a>
                     <button class="info-footer-link primary" id="open-settings">
                         <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
@@ -2320,6 +2146,7 @@
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     Start
                 </button>
+                <p class="start-hint" id="start-hint">Je sessies blijven alleen in deze browser. Geen account, geen tracking.</p>
             </div>
 
             <!-- Rating -->
@@ -2548,60 +2375,6 @@
         </div>
     </div>
 
-    <!-- Privacy/Welcome Modal -->
-    <div class="privacy-backdrop" id="privacy-modal">
-        <div class="privacy-modal">
-            <div class="privacy-header">
-                <div class="privacy-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </div>
-                <h2 class="privacy-title">Welkom</h2>
-                <p class="privacy-subtitle">Even voorstellen hoe dit werkt</p>
-            </div>
-            
-            <div class="privacy-body">
-                <div class="privacy-item">
-                    <div class="privacy-item-icon green">
-                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                    </div>
-                    <div class="privacy-item-content">
-                        <h4>Jouw privacy voorop</h4>
-                        <p>Geen cookies, geen tracking, geen account nodig. Wij verzamelen niets.</p>
-                    </div>
-                </div>
-                
-                <div class="privacy-item">
-                    <div class="privacy-item-icon">
-                        <svg viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14z"/></svg>
-                    </div>
-                    <div class="privacy-item-content">
-                        <h4>Lokale opslag</h4>
-                        <p>Je sessies en instellingen worden alleen in je eigen browser bewaard. Wis je browserdata? Dan is alles weg.</p>
-                    </div>
-                </div>
-                
-                <div class="privacy-item">
-                    <div class="privacy-item-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    </div>
-                    <div class="privacy-item-content">
-                        <h4>Open source</h4>
-                        <p>Deze app is volledig transparant en vrij beschikbaar op GitHub.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="privacy-footer">
-                <button class="privacy-accept-btn" id="privacy-accept">
-                    Begrepen, aan de slag
-                </button>
-                <p class="privacy-note">
-                    Door verder te gaan ga je akkoord met lokale opslag
-                </p>
-            </div>
-        </div>
-    </div>
-
     <footer class="footer oc-footer">
         <p class="quote oc-quote">Mildheid begint bij jezelf.</p>
     </footer>
@@ -2778,7 +2551,7 @@
         }
 
         function toggleMeditation() {
-            // Knop = start of skip
+            // Knop = start of stoppen (stoppen gooit de lopende sessie weg)
             if (STATE.isMeditating || STATE.isPaused) {
                 skipMeditation();
             } else {
@@ -2793,10 +2566,11 @@
             // Onthoud waar we starten voor de timing
             STATE.startIntention = STATE.currentIntention;
             STATE.elapsedBeforePause = 0;
+            $('start-hint').hidden = true;
 
             $('start-btn').innerHTML = `
-                <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                Overslaan
+                <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>
+                Stoppen
             `;
             
             $('heart-icon').style.display = 'none';
@@ -2937,7 +2711,7 @@
             `;
 
             document.querySelector('.meditation-view').style.display = 'flex';
-            document.querySelector('.controls').style.display = 'flex';
+            document.querySelector('.controls').style.display = 'flex'; $('start-hint').hidden = false;
             $('rating-view').classList.remove('active');
             $('success-view').classList.remove('active');
         }
@@ -3005,7 +2779,7 @@
             `;
 
             document.querySelector('.meditation-view').style.display = 'flex';
-            document.querySelector('.controls').style.display = 'flex';
+            document.querySelector('.controls').style.display = 'flex'; $('start-hint').hidden = false;
             $('rating-view').classList.remove('active');
             $('success-view').classList.remove('active');
         }
@@ -3840,28 +3614,6 @@
         // Init
         renderCalendar();
         updateStats();
-
-        // Privacy modal - show on first visit
-        function checkPrivacyConsent() {
-            // In de app (iframe) legt het gegevensscherm van de app de opslag al uit: dan geen welkomstvenster.
-            let inFrame = true;
-            try { inFrame = window.top !== window.self; } catch (e) { inFrame = true; }
-            if (inFrame) return;
-            let hasConsent = null;
-            try { hasConsent = localStorage.getItem('lk_privacy_accepted'); } catch (e) { hasConsent = null; }
-            if (!hasConsent) {
-                $('privacy-modal').classList.add('visible');
-                $('privacy-accept').focus();
-            }
-        }
-
-        $('privacy-accept').addEventListener('click', () => {
-            save('lk_privacy_accepted', 'true');
-            $('privacy-modal').classList.remove('visible');
-        });
-
-        // Check on load
-        checkPrivacyConsent();
     </script>
 </body>
 </html>
