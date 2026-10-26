@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)">
     <title>Hartmeditatie – Onder Constructie</title>
     <meta name="description" content="Oefen mildheid en compassie met vriendelijke wensen. Geïnspireerd door een oude boeddhistische meditatie van vriendelijkheid.">
     <meta name="oc:groep" content="reset">
@@ -29,6 +31,10 @@
             --text-soft: #475569;
             --text-muted: #64748b;
             --icon-muted: #94a3b8;
+            --chip-bg: #f1f5f9;
+            --bar-bg: rgba(248, 250, 252, 0.95);
+            --ring: #047857;
+            color-scheme: light;
             
             /* Mood heatmap colors - 5 levels */
             --mood-1: rgba(16, 185, 129, 0.12);
@@ -46,7 +52,7 @@
         }
 
         :focus-visible {
-            outline: 2px solid #047857;
+            outline: 2px solid var(--ring);
             outline-offset: 2px;
         }
 
@@ -79,8 +85,8 @@
 
         /* Header Banner */
         .header-banner {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             padding: 2.25rem 1.25rem 1.5rem;
             text-align: center;
             position: relative;
@@ -118,14 +124,14 @@
         .logo-text {
             font-size: 1.625rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text);
             letter-spacing: -0.03em;
             line-height: 1.2;
         }
 
         .logo-sub {
             font-size: 0.9375rem;
-            color: #64748b;
+            color: var(--text-muted);
             margin-top: 0.25rem;
         }
 
@@ -136,19 +142,19 @@
             width: 44px;
             height: 44px;
             border: none;
-            background: #f1f5f9;
+            background: var(--chip-bg);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #64748b;
+            color: var(--text-muted);
             transition: all 0.2s;
         }
 
         .banner-info-btn:hover {
-            background: #e2e8f0;
-            color: #047857;
+            background: var(--border);
+            color: var(--accent-text);
         }
 
         button, input, select, textarea { font-family: inherit; }
@@ -156,9 +162,9 @@
         .oc-back {
             position: absolute; left: 12px; top: 12px;
             display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; min-height: 44px; min-width: 44px; padding: 0 8px; border-radius: 8px;
-            font-size: 0.875rem; color: #64748b; text-decoration: none; transition: color 0.2s; z-index: 1;
+            font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; z-index: 1;
         }
-        .oc-back:hover { color: #047857; }
+        .oc-back:hover { color: var(--accent-text); }
         .oc-back svg { width: 16px; height: 16px; }
         @media (max-width: 480px) { .header-banner { padding-top: 3.5rem; } }
 
@@ -172,7 +178,7 @@
             padding: 12px 20px;
             display: flex;
             justify-content: center;
-            background: rgba(248, 250, 252, 0.95);
+            background: var(--bar-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0,0,0,0.04);
@@ -203,7 +209,7 @@
         }
 
         .nav-btn.active {
-            background: white;
+            background: var(--surface);
             color: var(--text);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
@@ -224,7 +230,7 @@
             right: 12px;
             margin-top: -4px;
             width: min(320px, calc(100% - 24px));
-            background: white;
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 0;
@@ -248,7 +254,7 @@
             top: -8px;
             right: 20px;
             border: 8px solid transparent;
-            border-bottom-color: white;
+            border-bottom-color: var(--surface);
             border-top: none;
         }
 
@@ -330,7 +336,7 @@
         .info-disclaimer p {
             font-size: 0.75rem;
             line-height: 1.5;
-            color: #64748b;
+            color: var(--text-muted);
             margin: 0;
         }
 
@@ -358,7 +364,7 @@
         }
 
         .info-footer-link:hover {
-            background: white;
+            background: var(--surface);
             color: var(--accent-text);
         }
 
@@ -369,7 +375,7 @@
         }
 
         .info-footer-link.primary {
-            background: white;
+            background: var(--surface);
             border: none;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             border-radius: 10px;
@@ -534,7 +540,7 @@
             width: 130px;
             height: 130px;
             border-radius: 50%;
-            background: white;
+            background: var(--surface);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -705,7 +711,7 @@
             min-height: 44px;
             padding: 10px 20px;
             border: 1.5px solid var(--border);
-            background: white;
+            background: var(--surface);
             border-radius: 24px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -756,7 +762,7 @@
             border-radius: 12px;
             font-size: 0.9rem;
             color: var(--text);
-            background: white;
+            background: var(--surface);
             width: 140px;
             transition: all 0.2s;
         }
@@ -816,7 +822,7 @@
             max-width: 320px;
             font-size: 0.8125rem;
             line-height: 1.45;
-            color: #64748b;
+            color: var(--text-muted);
             text-align: center;
         }
         .start-hint[hidden] { display: none; }
@@ -868,7 +874,7 @@
         }
 
         .btn-secondary {
-            background: white;
+            background: var(--surface);
             color: var(--accent-text);
             border: 2px solid var(--border);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -997,7 +1003,7 @@
             appearance: none;
             width: 28px;
             height: 28px;
-            background: white;
+            background: var(--surface);
             border: 3px solid var(--accent);
             border-radius: 50%;
             cursor: pointer;
@@ -1013,7 +1019,7 @@
         .mood-slider::-moz-range-thumb {
             width: 28px;
             height: 28px;
-            background: white;
+            background: var(--surface);
             border: 3px solid var(--accent);
             border-radius: 50%;
             cursor: pointer;
@@ -1123,7 +1129,7 @@
             width: 44px;
             height: 44px;
             border: 1px solid var(--border);
-            background: white;
+            background: var(--surface);
             border-radius: 12px;
             cursor: pointer;
             display: flex;
@@ -1157,7 +1163,7 @@
             width: 44px;
             height: 44px;
             border: 1px solid var(--border);
-            background: white;
+            background: var(--surface);
             border-radius: 12px;
             cursor: pointer;
             display: flex;
@@ -1178,7 +1184,7 @@
         }
 
         .calendar {
-            background: white;
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 20px;
@@ -1276,7 +1282,7 @@
             color: inherit;
             width: 100%;
             min-width: 0;
-            background: white;
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px 12px;
@@ -1323,7 +1329,7 @@
         .analytics-btn {
             margin: 20px auto 0;
             padding: 14px 28px;
-            background: white;
+            background: var(--surface);
             border: 1.5px solid var(--border);
             border-radius: 50px;
             font-size: 0.9rem;
@@ -1414,7 +1420,7 @@
         }
 
         .modal {
-            background: white;
+            background: var(--surface);
             border-radius: 24px;
             padding: 28px;
             width: 100%;
@@ -1468,7 +1474,7 @@
         .modal-close-x svg {
             width: 16px;
             height: 16px;
-            fill: #64748b;
+            fill: var(--text-muted);
         }
 
         .modal-entries {
@@ -1671,7 +1677,7 @@
         .session-recipient {
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: white;
+            background: var(--surface);
             padding: 4px 10px;
             border-radius: 10px;
         }
@@ -1779,7 +1785,7 @@
             font-weight: 600;
             color: var(--text);
             text-align: center;
-            background: white;
+            background: var(--surface);
             transition: all 0.2s;
         }
 
@@ -1862,7 +1868,7 @@
         }
 
         .btn-reset {
-            background: white;
+            background: var(--surface);
             color: var(--text-soft);
             border: 1.5px solid var(--border);
             padding: 12px 20px;
@@ -1902,22 +1908,22 @@
         }
         .oc-dialog-backdrop.open { opacity: 1; }
         .oc-dialog {
-            width: 100%; max-width: 400px; background: #ffffff; border-radius: 16px; padding: 1.375rem 1.375rem 1.125rem;
+            width: 100%; max-width: 400px; background: var(--surface); border-radius: 16px; padding: 1.375rem 1.375rem 1.125rem;
             box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25); font-family: 'DM Sans', system-ui, sans-serif;
             transform: translateY(8px) scale(0.98); transition: transform 0.15s ease;
         }
         .oc-dialog-backdrop.open .oc-dialog { transform: none; }
-        .oc-dialog-msg { font-size: 0.9375rem; line-height: 1.5; color: #334155; white-space: pre-line; }
-        .oc-dialog-label { display: block; font-size: 0.875rem; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem; }
+        .oc-dialog-msg { font-size: 0.9375rem; line-height: 1.5; color: var(--text-soft); white-space: pre-line; }
+        .oc-dialog-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
         .oc-dialog-input {
-            width: 100%; padding: 0.6875rem 0.875rem; border: 1.5px solid #e2e8f0; border-radius: 10px; font: inherit;
-            font-size: 1rem; color: #1e293b; background: #f8fafc;
+            width: 100%; padding: 0.6875rem 0.875rem; border: 1.5px solid var(--border); border-radius: 10px; font: inherit;
+            font-size: 1rem; color: var(--text); background: var(--bg);
         }
-        .oc-dialog-input:focus { border-color: #047857; background: #ffffff; }
+        .oc-dialog-input:focus { border-color: var(--accent-text); background: var(--surface); }
         .oc-dialog-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
         .oc-dialog-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; min-height: 44px; padding: 0.625rem 1rem; border-radius: 10px; border: 0; cursor: pointer; }
-        .oc-dialog-cancel { background: #f1f5f9; color: #475569; }
-        .oc-dialog-cancel:hover { background: #e2e8f0; }
+        .oc-dialog-cancel { background: var(--chip-bg); color: var(--text-soft); }
+        .oc-dialog-cancel:hover { background: var(--border); }
         .oc-dialog-ok { background: #047857; color: #ffffff; }
         .oc-dialog-ok:hover { background: #065f46; }
         .oc-dialog-ok.danger { background: #ef4444; }
@@ -1928,18 +1934,82 @@
             text-align: center;
             padding: 2rem 1.5rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
             margin-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-            background: #ffffff;
-            color: #047857;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--accent-text);
         }
 
         footer.oc-footer .oc-quote {
             font-size: 0.8125rem;
             line-height: 1.5;
-            color: #047857;
+            color: var(--accent-text);
             opacity: 1;
             font-style: normal;
             margin: 0;
+        }
+    
+        /* Op de gsm: startknop boven de vouw (ook in het venster van de app) */
+        @media (max-width: 480px), (max-height: 900px) {
+            .header-banner { padding: 3rem 1.25rem 1rem; }
+            .logo-mark, .logo-mark svg { width: 44px; height: 44px; }
+            .logo-mark { margin-bottom: 0.25rem; }
+            .logo-text { font-size: 1.5rem; }
+            .nav-bar { padding: 8px 16px; }
+            .meditation-stage { padding: 4px 12px 4px; }
+            .breath-circle { margin-bottom: 16px; }
+            .progress-dots { margin-top: 4px; }
+            .recipient-section { margin-top: 12px; }
+            .recipient-label { margin-bottom: 8px; }
+            .controls { padding: 12px 24px 28px; }
+        }
+
+        /* Donkere modus: rustig donker slate, groen accent */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg: #0f172a;
+                --surface: #1e293b;
+                --border: #334155;
+                --accent-text: #a7f3d0;
+                --text: #f1f5f9;
+                --text-soft: #cbd5e1;
+                --text-muted: #94a3b8;
+                --icon-muted: #94a3b8;
+                --chip-bg: #273449;
+                --bar-bg: rgba(15, 23, 42, 0.95);
+                --ring: #a7f3d0;
+                --accent-light: rgba(16, 185, 129, 0.14);
+                --accent-medium: rgba(16, 185, 129, 0.24);
+                --mood-1: rgba(16, 185, 129, 0.14);
+                --mood-2: rgba(16, 185, 129, 0.24);
+                --mood-3: rgba(16, 185, 129, 0.34);
+                --mood-4: rgba(16, 185, 129, 0.44);
+                --mood-5: rgba(16, 185, 129, 0.55);
+            }
+            .logo-mark svg circle:first-child { fill: #273449; stroke: #334155; }
+            .intention-text .keyword, .breath-phase-text { background: none; -webkit-text-fill-color: #a7f3d0; color: #a7f3d0; }
+            .day-count { color: var(--text); }
+            .nav-bar { border-bottom-color: var(--border); }
+            .modal-backdrop, .oc-dialog-backdrop { background: rgba(15, 23, 42, 0.75); }
+            .btn-primary { box-shadow: none; }
+        }
+
+        /* Hoog contrast: gekozen knoppen krijgen een dikke rand */
+        @media (forced-colors: active) {
+            .nav-btn, .recipient-chip, .btn { border: 1px solid ButtonText; }
+            .nav-btn[aria-pressed="true"], .recipient-chip[aria-pressed="true"] { border: 3px solid Highlight; }
+            .nav-btn[aria-pressed="true"]::before, .recipient-chip[aria-pressed="true"]::before { content: "\2713  "; }
+            .dot::before { background: CanvasText; forced-color-adjust: none; }
+            .dot.active::before { background: Highlight; }
+            .breath-circle { border: 2px solid CanvasText; }
+            .day.has-entry { border: 2px solid CanvasText; }
+            .legend-box { forced-color-adjust: none; border: 1px solid CanvasText; }
+            :focus-visible { outline: 3px solid Highlight; }
+        }
+
+        /* Minder beweging: de bol blijft even groot, geen schuifanimaties */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
         }
     </style>
 </head>
@@ -2079,8 +2149,8 @@
         <!-- Navigation Bar -->
         <div class="nav-bar">
             <nav class="nav">
-                <button class="nav-btn active" data-view="meditate">Mediteer</button>
-                <button class="nav-btn" data-view="calendar">Kalender</button>
+                <button class="nav-btn active" data-view="meditate" aria-pressed="true">Mediteer</button>
+                <button class="nav-btn" data-view="calendar" aria-pressed="false">Kalender</button>
             </nav>
         </div>
 
@@ -2119,7 +2189,7 @@
                     </div>
 
                     <div class="progress-dots" id="progress-dots">
-                        <button type="button" class="dot active" data-index="0" aria-label="Wens 1"></button>
+                        <button type="button" class="dot active" data-index="0" aria-label="Wens 1" aria-current="step"></button>
                         <button type="button" class="dot" data-index="1" aria-label="Wens 2"></button>
                         <button type="button" class="dot" data-index="2" aria-label="Wens 3"></button>
                         <button type="button" class="dot" data-index="3" aria-label="Wens 4"></button>
@@ -2129,8 +2199,8 @@
                     <div class="recipient-section" id="recipient-section">
                         <div class="recipient-label">Wens voor</div>
                         <div class="recipient-chips" id="recipient-chips">
-                            <button class="recipient-chip active" data-recipient="ik">Mezelf</button>
-                            <button class="recipient-chip" data-recipient="other">Iemand anders</button>
+                            <button class="recipient-chip active" data-recipient="ik" aria-pressed="true">Mezelf</button>
+                            <button class="recipient-chip" data-recipient="other" aria-pressed="false">Iemand anders</button>
                         </div>
                         <div class="recipient-custom" id="recipient-custom">
                             <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam..." aria-label="Naam van wie je iets toewenst" maxlength="40" autocomplete="off">
@@ -2144,9 +2214,9 @@
             <div class="controls">
                 <button class="btn btn-primary" id="start-btn">
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    Start
+                    Start · 2 min
                 </button>
-                <p class="start-hint" id="start-hint">Je sessies blijven alleen in deze browser. Geen account, geen tracking.</p>
+                <p class="start-hint" id="start-hint">Vier wensen, elk een halve minuut. Alles blijft in deze browser.</p>
             </div>
 
             <!-- Rating -->
@@ -2383,6 +2453,31 @@
         const $ = id => document.getElementById(id);
         const $$ = sel => document.querySelectorAll(sel);
 
+        // Keuzeknoppen: aria-pressed volgt de klasse 'active'
+        function syncPressed() {
+            $$('.nav-btn, .recipient-chip').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('active') ? 'true' : 'false'));
+        }
+        new MutationObserver(syncPressed).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
+
+        // Scherm wakker houden tijdens de meditatie, en de app laten weten dat er een sessie loopt
+        let wakeLock = null, wantWake = false, hartBusy = false;
+        async function lockWake() {
+            if (!wantWake || wakeLock || document.visibilityState !== 'visible') return;
+            try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); } } catch (e) {}
+        }
+        function hartWake(on) {
+            wantWake = on;
+            if (on) lockWake(); else { try { wakeLock && wakeLock.release(); } catch (e) {} wakeLock = null; }
+        }
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') lockWake(); });
+        function ocBusy(busy) {
+            hartBusy = busy;
+            try { if (window.parent !== window) window.parent.postMessage({ type: 'oc-busy', busy: !!busy, title: busy ? 'Hart' : '' }, '*'); } catch (e) {}
+        }
+        function hartEnd() { hartWake(false); if (hartBusy) ocBusy(false); }
+        addEventListener('pagehide', () => { if (hartBusy) ocBusy(false); });
+        const RM = matchMedia('(prefers-reduced-motion: reduce)');
+
         const MOODS = [
             { label: 'Zwaar', desc: 'Het voelt moeilijk', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
             { label: 'Matig', desc: 'Niet geweldig', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
@@ -2567,6 +2662,7 @@
             STATE.startIntention = STATE.currentIntention;
             STATE.elapsedBeforePause = 0;
             $('start-hint').hidden = true;
+            hartWake(true); ocBusy(true);
 
             $('start-btn').innerHTML = `
                 <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>
@@ -2618,6 +2714,7 @@
             STATE.isMeditating = false;
             STATE.isPaused = true;
             STATE.pausedAt = Date.now();
+            hartWake(false);
             STATE.elapsedBeforePause = (STATE.elapsedBeforePause || 0) + (STATE.pausedAt - STATE.breathStartTime);
             
             clearInterval(STATE.timer);
@@ -2635,6 +2732,7 @@
             STATE.isMeditating = true;
             STATE.isPaused = false;
             
+            hartWake(true);
             // Verberg pauze indicator, toon ademfase
             $('pause-indicator').classList.remove('visible');
             $('breath-phase').style.display = 'flex';
@@ -2667,6 +2765,7 @@
         }
 
         function skipMeditation() {
+            hartEnd();
             // Stop huidige sessie zonder opslaan
             STATE.isMeditating = false;
             STATE.isPaused = false;
@@ -2707,7 +2806,7 @@
             
             $('start-btn').innerHTML = `
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Start
+                Start · 2 min
             `;
 
             document.querySelector('.meditation-view').style.display = 'flex';
@@ -2717,6 +2816,7 @@
         }
 
         function completeMeditation() {
+            hartEnd();
             STATE.isMeditating = false;
             STATE.isPaused = false;
             STATE.elapsedBeforePause = 0;
@@ -2736,6 +2836,7 @@
         }
 
         function resetMeditation() {
+            hartEnd();
             // Stop timers als ze lopen
             STATE.isMeditating = false;
             STATE.isPaused = false;
@@ -2775,7 +2876,7 @@
             
             $('start-btn').innerHTML = `
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Start
+                Start · 2 min
             `;
 
             document.querySelector('.meditation-view').style.display = 'flex';
@@ -2824,6 +2925,7 @@
                 bgOpacity = 0.16 - (progress * 0.12);
             }
             
+            if (RM.matches) scale = 0.85;
             // Apply styles
             circle.style.transform = `scale(${scale})`;
             circle.style.background = `linear-gradient(145deg, rgba(5, 150, 105, ${bgOpacity}), rgba(4, 120, 87, ${bgOpacity * 0.6}))`;
@@ -2867,8 +2969,10 @@
         function updateDots() {
             $$('.dot').forEach((dot, i) => {
                 dot.classList.remove('active', 'done');
+                dot.removeAttribute('aria-current');
                 if (i === STATE.currentIntention) {
                     dot.classList.add('active');
+                    dot.setAttribute('aria-current', 'step');
                 } else if (i < STATE.currentIntention) {
                     dot.classList.add('done');
                 }
