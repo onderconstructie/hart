@@ -455,7 +455,20 @@
 
 
         .breath-circle.active {
-            /* Animation controlled by JavaScript for sync */
+            /* Tijdens de meditatie zet requestAnimationFrame elke frame de schaal: geen extra overgang ertussen */
+            transition: none;
+            will-change: transform;
+        }
+        .breath-circle.active .breath-glow { will-change: opacity; }
+        /* De gloed van de inademing: een vaste laag die alleen in opacity verandert (goedkoop op een trage gsm) */
+        .breath-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(5, 150, 105, 0.12), rgba(4, 120, 87, 0.072));
+            box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.08), 0 18px 40px rgba(5, 150, 105, 0.1);
+            opacity: 0;
+            pointer-events: none;
         }
 
         @keyframes breathe {
@@ -760,10 +773,10 @@
             padding: 10px 16px;
             border: 1.5px solid var(--border);
             border-radius: 12px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text);
             background: var(--surface);
-            width: 140px;
+            width: 150px;
             transition: all 0.2s;
         }
 
@@ -2011,6 +2024,14 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
         }
+
+        /* Soepel op gsm: geen tikvertraging, grote startknop in de duimzone */
+        a, button, [role="button"], label { touch-action: manipulation; }
+        .btn:active, .recipient-chip:active, .nav-btn:active { filter: brightness(0.94); }
+        @media (pointer: coarse) {
+            .controls .btn-primary { min-height: 56px; min-width: min(100%, 15rem); }
+        }
+        .controls { padding-bottom: max(28px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
     </style>
 </head>
 <body>
@@ -2159,6 +2180,7 @@
             <div class="meditation-view">
                 <div class="meditation-stage">
                     <div class="breath-circle" id="breath-circle" tabindex="0" role="button" aria-label="Start of pauzeer de meditatie">
+                        <span class="breath-glow" id="breath-glow" aria-hidden="true"></span>
                         <svg class="progress-ring" width="216" height="216" viewBox="0 0 216 216">
                             <defs>
                                 <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2203,7 +2225,7 @@
                             <button class="recipient-chip" data-recipient="other" aria-pressed="false">Iemand anders</button>
                         </div>
                         <div class="recipient-custom" id="recipient-custom">
-                            <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam..." aria-label="Naam van wie je iets toewenst" maxlength="40" autocomplete="off">
+                            <input type="text" class="recipient-input" id="recipient-input" placeholder="Naam..." aria-label="Naam van wie je iets toewenst" maxlength="40" autocomplete="off" enterkeyhint="done" autocapitalize="words">
                             <button class="recipient-confirm" id="recipient-confirm">OK</button>
                         </div>
                         <div class="recipient-name-display" id="recipient-name-display"></div>
@@ -2688,10 +2710,7 @@
             updateBreathPhase();
             updateProgressRing();
 
-            STATE.breathTimer = setInterval(() => {
-                updateBreathPhase();
-                updateProgressRing();
-            }, 50);
+            startBreathLoop();
 
             STATE.timer = setInterval(() => {
                 STATE.remaining--;
@@ -2718,7 +2737,7 @@
             STATE.elapsedBeforePause = (STATE.elapsedBeforePause || 0) + (STATE.pausedAt - STATE.breathStartTime);
             
             clearInterval(STATE.timer);
-            clearInterval(STATE.breathTimer);
+            stopBreathLoop();
             
             // Toon pauze indicator
             $('breath-phase').style.display = 'none';
@@ -2742,10 +2761,7 @@
             
             $('breath-circle').classList.add('active');
             
-            STATE.breathTimer = setInterval(() => {
-                updateBreathPhase();
-                updateProgressRing();
-            }, 50);
+            startBreathLoop();
 
             STATE.timer = setInterval(() => {
                 STATE.remaining--;
@@ -2771,7 +2787,7 @@
             STATE.isPaused = false;
             STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
-            clearInterval(STATE.breathTimer);
+            stopBreathLoop();
             
             // Reset alles naar beginstaat
             $('heart-icon').style.display = 'block';
@@ -2788,6 +2804,7 @@
             circle.style.transform = '';
             circle.style.background = '';
             circle.style.boxShadow = '';
+            breathGlow.style.opacity = ''; lastPhaseText = ''; lastRingOffset = null;
             
             // Reset recipient keuze
             $$('.recipient-chip').forEach(c => c.classList.remove('active'));
@@ -2821,7 +2838,7 @@
             STATE.isPaused = false;
             STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
-            clearInterval(STATE.breathTimer);
+            stopBreathLoop();
 
             $('breath-circle').classList.remove('active');
             $('pause-indicator').classList.remove('visible');
@@ -2842,7 +2859,7 @@
             STATE.isPaused = false;
             STATE.elapsedBeforePause = 0;
             clearInterval(STATE.timer);
-            clearInterval(STATE.breathTimer);
+            stopBreathLoop();
             
             $('heart-icon').style.display = 'block';
             $('breath-phase').style.display = 'none';
@@ -2858,6 +2875,7 @@
             circle.style.transform = '';
             circle.style.background = '';
             circle.style.boxShadow = '';
+            breathGlow.style.opacity = ''; lastPhaseText = ''; lastRingOffset = null;
             
             // Reset recipient keuze
             $$('.recipient-chip').forEach(c => c.classList.remove('active'));
@@ -2884,6 +2902,24 @@
             $('rating-view').classList.remove('active');
             $('success-view').classList.remove('active');
         }
+
+        // Eén animatielus per frame (requestAnimationFrame): stopt vanzelf bij pauze of einde
+        function startBreathLoop() {
+            stopBreathLoop();
+            const frame = () => {
+                if (!STATE.isMeditating) { STATE.breathTimer = null; return; }
+                updateBreathPhase();
+                updateProgressRing();
+                STATE.breathTimer = requestAnimationFrame(frame);
+            };
+            STATE.breathTimer = requestAnimationFrame(frame);
+        }
+        function stopBreathLoop() {
+            if (STATE.breathTimer) cancelAnimationFrame(STATE.breathTimer);
+            STATE.breathTimer = null;
+        }
+        let lastPhaseText = '', lastRingOffset = null;
+        const breathGlow = $('breath-glow');
 
         function updateBreathPhase() {
             if (!STATE.isMeditating) return;
@@ -2926,12 +2962,10 @@
             }
             
             if (RM.matches) scale = 0.85;
-            // Apply styles
-            circle.style.transform = `scale(${scale})`;
-            circle.style.background = `linear-gradient(145deg, rgba(5, 150, 105, ${bgOpacity}), rgba(4, 120, 87, ${bgOpacity * 0.6}))`;
-            circle.style.boxShadow = `0 0 0 1px rgba(5, 150, 105, ${bgOpacity * 0.5}), 0 ${8 + scale * 10}px ${20 + scale * 20}px rgba(5, 150, 105, ${bgOpacity * 0.8})`;
-            
-            $('breath-phase-text').textContent = phaseText;
+            // Alleen transform en opacity: de gsm hoeft niets opnieuw te schikken of te schilderen
+            circle.style.transform = `scale(${scale.toFixed(4)})`;
+            breathGlow.style.opacity = Math.max(0, Math.min(1, (bgOpacity - 0.04) / 0.12)).toFixed(3);
+            if (phaseText !== lastPhaseText) { $('breath-phase-text').textContent = phaseText; lastPhaseText = phaseText; }
         }
 
         function updateProgressRing() {
@@ -2942,6 +2976,8 @@
             const progress = elapsed / STATE.duration;
             
             const offset = -circumference * progress;
+            if (offset === lastRingOffset) return;   // verandert maar één keer per seconde
+            lastRingOffset = offset;
             $('ring-progress').style.strokeDashoffset = offset;
             
             const opacity = 1 - (progress * 0.7);
@@ -3715,9 +3751,8 @@
         });
         $('settings-modal-close').addEventListener('click', () => $('settings-modal').classList.remove('visible'));
 
-        // Init
-        renderCalendar();
-        updateStats();
+        // Init: de kalender is pas zichtbaar na een tik op 'Kalender'; we tekenen hem als de gsm even niets te doen heeft
+        (window.requestIdleCallback || (f => setTimeout(f, 300)))(() => { renderCalendar(); updateStats(); });
     </script>
 <script>
 /* oc-sync: reageert op "Afsluiten" in de app (ook in andere tabbladen) en geeft Esc door aan de app */
