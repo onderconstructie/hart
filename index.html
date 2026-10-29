@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
     <title>Hartmeditatie – Onder Constructie</title>
     <meta name="description" content="Oefen mildheid en compassie met vriendelijke wensen. Geïnspireerd door een oude boeddhistische meditatie van vriendelijkheid.">
     <meta name="oc:groep" content="reset">
@@ -1977,35 +1976,7 @@
         }
 
         /* Donkere modus: rustig donker slate, groen accent */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                color-scheme: dark;
-                --bg: #0f172a;
-                --surface: #1e293b;
-                --border: #334155;
-                --accent-text: #a7f3d0;
-                --text: #f1f5f9;
-                --text-soft: #cbd5e1;
-                --text-muted: #94a3b8;
-                --icon-muted: #94a3b8;
-                --chip-bg: #273449;
-                --bar-bg: rgba(15, 23, 42, 0.95);
-                --ring: #a7f3d0;
-                --accent-light: rgba(16, 185, 129, 0.14);
-                --accent-medium: rgba(16, 185, 129, 0.24);
-                --mood-1: rgba(16, 185, 129, 0.14);
-                --mood-2: rgba(16, 185, 129, 0.24);
-                --mood-3: rgba(16, 185, 129, 0.34);
-                --mood-4: rgba(16, 185, 129, 0.44);
-                --mood-5: rgba(16, 185, 129, 0.55);
-            }
-            .logo-mark svg circle:first-child { fill: #273449; stroke: #334155; }
-            .intention-text .keyword, .breath-phase-text { background: none; -webkit-text-fill-color: #a7f3d0; color: #a7f3d0; }
-            .day-count { color: var(--text); }
-            .nav-bar { border-bottom-color: var(--border); }
-            .modal-backdrop, .oc-dialog-backdrop { background: rgba(15, 23, 42, 0.75); }
-            .btn-primary { box-shadow: none; }
-        }
+        
 
         /* Hoog contrast: gekozen knoppen krijgen een dikke rand */
         @media (forced-colors: active) {
