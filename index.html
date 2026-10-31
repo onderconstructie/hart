@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#ffffff">
     <title>Hartmeditatie – Onder Constructie</title>
-    <meta name="description" content="Oefen mildheid en compassie met vriendelijke wensen. Geïnspireerd door een oude boeddhistische meditatie van vriendelijkheid.">
+    <meta name="description" content="Twee minuten rustig ademen met vier vriendelijke wensen, voor jezelf of voor iemand anders.">
     <meta name="oc:groep" content="reset">
     <meta name="oc:labels" content="mildheid">
     <meta name="oc:kort" content="Vriendelijke wensen voor jezelf en anderen">
@@ -1863,6 +1863,13 @@
             margin-top: 8px;
         }
 
+        .breath-safe {
+            font-size: 0.8125rem;
+            line-height: 1.45;
+            color: var(--text-soft, #475569);
+            text-align: center;
+            margin: 0.75rem 0 0;
+        }
         .breath-total strong {
             color: var(--accent-text);
             font-weight: 700;
@@ -2110,15 +2117,15 @@
 
                         </div>
                         <div class="info-section-content">
-                            <p>Geïnspireerd door een oude boeddhistische <strong>meditatie van vriendelijkheid</strong>. Je herhaalt vriendelijke wensen om mildheid en compassie te oefenen.</p>
+                            <p>Je richt <strong>vier vriendelijke wensen</strong> op jezelf of op iemand anders, op het ritme van je adem. Elke wens duurt een halve minuut.</p>
                         </div>
                     </div>
                     <div class="info-section">
                         <div class="info-section-icon">
-                            <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg>
+                            <svg viewBox="0 0 24 24" style="fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/></svg>
                         </div>
                         <div class="info-section-content">
-                            <p>Onderzoek naar <strong>deze vorm van meditatie</strong> suggereert dat ze positieve emoties kan versterken en kan bijdragen aan verbondenheid en veerkracht.</p>
+                            <p>Er is <strong>niets te bereiken</strong> en niets goed of fout te doen. Dwalen je gedachten af? Keer dan rustig terug naar de wens.</p>
                         </div>
                     </div>
                     <div class="info-disclaimer">
@@ -2177,7 +2184,7 @@
 
                     <div class="intention-display">
                         <p class="intention-text visible" id="intention-text" aria-live="polite">
-                            Dat ik me <span class="keyword">veilig</span> mag voelen
+                            Dat ik <span class="keyword">rust</span> mag vinden
                         </p>
                     </div>
 
@@ -2395,7 +2402,7 @@
                             <span class="setting-label-sub">Even stilstaan</span>
                         </div>
                         <div class="setting-input-wrap">
-                            <input type="number" class="setting-input" id="setting-hold" min="0" max="10" value="6" aria-label="Vasthouden, in seconden">
+                            <input type="number" class="setting-input" id="setting-hold" min="0" max="6" value="2" aria-label="Vasthouden, in seconden">
                             <span class="setting-unit">sec</span>
                         </div>
                     </div>
@@ -2414,21 +2421,22 @@
 
                 <div class="breath-preview">
                     <div class="breath-preview-item">
-                        <div class="breath-preview-bar" id="preview-inhale" style="width: 40px;"></div>
+                        <div class="breath-preview-bar" id="preview-inhale" style="width: 53px;"></div>
                         <span class="breath-preview-label">In</span>
                     </div>
                     <div class="breath-preview-item">
-                        <div class="breath-preview-bar" id="preview-hold" style="width: 60px; opacity: 0.7;"></div>
+                        <div class="breath-preview-bar" id="preview-hold" style="width: 27px; opacity: 0.7;"></div>
                         <span class="breath-preview-label">Vast</span>
                     </div>
                     <div class="breath-preview-item">
-                        <div class="breath-preview-bar" id="preview-exhale" style="width: 60px; opacity: 0.85;"></div>
+                        <div class="breath-preview-bar" id="preview-exhale" style="width: 80px; opacity: 0.85;"></div>
                         <span class="breath-preview-label">Uit</span>
                     </div>
                 </div>
                 <div class="breath-total">
-                    Eén ademcyclus: <strong id="breath-cycle-total">16</strong> seconden
+                    Eén ademhaling: <strong id="breath-cycle-total">12</strong> seconden
                 </div>
+                <p class="breath-safe">Word je licht in je hoofd of voelt het onprettig? Kies korter of 0 bij vasthouden, of adem gewoon in je eigen tempo.</p>
 
                 <div class="settings-actions">
                     <button class="btn btn-reset" id="settings-reset">Standaard</button>
@@ -2476,7 +2484,7 @@
             { label: 'Matig', desc: 'Niet geweldig', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
             { label: 'Goed', desc: 'Tevreden en aanwezig', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
             { label: 'Heel goed', desc: 'Warm en open', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/></svg>' },
-            { label: 'Stralend', desc: 'Vol liefde en vreugde', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><path d="M9 9.5c.5-.5 1-.5 1.5 0"/><path d="M13.5 9.5c.5-.5 1-.5 1.5 0"/></svg>' }
+            { label: 'Stralend', desc: 'Licht en blij', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/><path d="M9 9.5c.5-.5 1-.5 1.5 0"/><path d="M13.5 9.5c.5-.5 1-.5 1.5 0"/></svg>' }
         ];
 
         // Opslag: kapotte of geblokkeerde opslag mag de pagina nooit stilleggen.
@@ -2491,11 +2499,13 @@
         }
         const clampInt = (v, min, max, d) => { const n = parseInt(v, 10); return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : d; };
 
-        const DEFAULT_BREATH = { inhale: 4, hold: 6, exhale: 6 };
+        // Zacht standaardritme: korte pauze, lange uitademing. Vasthouden kan hooguit 6 seconden.
+        const DEFAULT_BREATH = { inhale: 4, hold: 2, exhale: 6 };
+        const MAX_HOLD = 6;
         const rawBreath = load('lk_breath', null);
         const savedBreath = (rawBreath && typeof rawBreath === 'object') ? {
             inhale: clampInt(rawBreath.inhale, 2, 10, DEFAULT_BREATH.inhale),
-            hold: clampInt(rawBreath.hold, 0, 10, DEFAULT_BREATH.hold),
+            hold: clampInt(rawBreath.hold, 0, MAX_HOLD, DEFAULT_BREATH.hold),
             exhale: clampInt(rawBreath.exhale, 2, 12, DEFAULT_BREATH.exhale)
         } : DEFAULT_BREATH;
         const rawEntries = load('lk_entries', []);
@@ -2528,17 +2538,17 @@
         function getIntentions(recipient) {
             if (recipient === 'ik') {
                 return [
-                    { text: 'Dat ik me <span class="keyword">veilig</span> mag voelen' },
-                    { text: 'Dat ik me <span class="keyword">gelukkig</span> mag voelen' },
-                    { text: 'Dat ik me <span class="keyword">gezond</span> mag voelen' },
-                    { text: 'Dat ik met <span class="keyword">gemak</span> mag leven' }
+                    { text: 'Dat ik <span class="keyword">rust</span> mag vinden' },
+                    { text: 'Dat ik <span class="keyword">mild</span> mag zijn voor mezelf' },
+                    { text: 'Dat ik me <span class="keyword">gesteund</span> mag voelen' },
+                    { text: 'Dat ik met <span class="keyword">vertrouwen</span> verder mag' }
                 ];
             } else {
                 return [
-                    { text: `Dat ${esc(recipient)} zich <span class="keyword">veilig</span> mag voelen` },
-                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gelukkig</span> mag voelen` },
-                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gezond</span> mag voelen` },
-                    { text: `Dat ${esc(recipient)} met <span class="keyword">gemak</span> mag leven` }
+                    { text: `Dat ${esc(recipient)} <span class="keyword">rust</span> mag vinden` },
+                    { text: `Dat ${esc(recipient)} <span class="keyword">mild</span> mag zijn voor zichzelf` },
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gesteund</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} met <span class="keyword">vertrouwen</span> verder mag` }
                 ];
             }
         }
@@ -2916,7 +2926,7 @@
                 bgOpacity = 0.04 + (progress * 0.12);
             } else if (hold > 0 && phase < inhale + hold) {
                 // VASTHOUDEN (alleen als hold > 0)
-                phaseText = 'Vasthouden';
+                phaseText = 'Hou even vast';
                 const holdPhase = phase - inhale;
                 const pulse = Math.sin(holdPhase * Math.PI * 1) * 0.02;
                 scale = 1.0 + pulse;
@@ -3107,7 +3117,7 @@
                 '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>',
                 '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>',
                 '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/></svg>',
-                '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13c0 2 1.8 3 4 3s4-1 4-3"/></svg>'
+                '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.5 13c0 2.5 2 3.8 4.5 3.8s4.5-1.3 4.5-3.8z"/></svg>'
             ];
             return svgs[mood - 1] || svgs[2];
         }
@@ -3281,7 +3291,7 @@
                     </div>
                     <div class="highlight-card">
                         <div class="highlight-value">${bestDay}</div>
-                        <div class="highlight-label">Beste dag</div>
+                        <div class="highlight-label">Dag met de beste stemming</div>
                     </div>
                 </div>
 
@@ -3707,7 +3717,7 @@
         $('settings-save').addEventListener('click', () => {
             const inhale = Math.max(2, Math.min(10, parseInt($('setting-inhale').value) || 4));
             const holdValue = parseInt($('setting-hold').value);
-            const hold = Math.max(0, Math.min(10, isNaN(holdValue) ? 6 : holdValue));
+            const hold = Math.max(0, Math.min(MAX_HOLD, isNaN(holdValue) ? DEFAULT_BREATH.hold : holdValue));
             const exhale = Math.max(2, Math.min(12, parseInt($('setting-exhale').value) || 6));
             
             STATE.breath = { inhale, hold, exhale };
