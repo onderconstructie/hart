@@ -2022,6 +2022,22 @@
             .banner-info-btn { right: min(12px, calc(20px - (100vw - 480px) / 2)); top: 18px; }
             .info-tooltip { right: min(12px, calc(20px - (100vw - 480px) / 2)); }
         }
+
+        /* Eenheid: één kop zoals in de andere tools (november 2026) */
+        .header-banner { padding:1.5rem 1.25rem 1.75rem; }
+        .header-banner .logo-mark { width:56px; height:56px; margin:0 0 7px; }
+        .header-banner .logo-mark svg { width:56px; height:56px; }
+        .header-banner .logo-text { font-size:1.625rem; line-height:1.2; margin-top:0.5rem; color:#1e293b; }
+        .header-banner .logo-sub { font-size:0.9375rem; line-height:1.5; margin-top:0.125rem; color:#64748b; }
+        .header-banner .oc-back { top:1.25rem; left:1.25rem; padding:0; gap:0.5rem; justify-content:flex-start; }
+        .header-banner .banner-info-btn { top:1.25rem; right:1.25rem; }
+        @media (min-width:560px) {
+            .header-banner .oc-back { left:min(1.25rem, calc(20px - (100vw - 480px) / 2)); }
+            .header-banner .banner-info-btn { right:min(1.25rem, calc(20px - (100vw - 480px) / 2)); }
+        }
+        @media (max-width:640px) {
+            .header-banner .oc-back { position:static; display:flex; justify-content:center; margin:0 auto 0.75rem; width:max-content; }
+        }
 </style>
 </head>
 <body>
