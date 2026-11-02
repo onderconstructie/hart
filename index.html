@@ -1919,34 +1919,36 @@
             border-radius: 4px;
         }
     
-        /* Dialoog in de pagina, in plaats van de pop-ups van de browser */
-        .oc-dialog-backdrop {
-            position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center;
-            padding: 1rem; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(3px);
-            opacity: 0; transition: opacity 0.15s ease;
+        /* ⋮-menu en melding, zoals in de andere tools */
+        .nav-bar { position: sticky; }
+        .menu-wrap { position:absolute; right:12px; top:50%; transform:translateY(-50%); z-index:60; }
+        .icon-btn { width:44px; height:44px; min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:10px; background:none; color:#64748b; cursor:pointer; flex-shrink:0; }
+        .icon-btn:hover, .icon-btn[aria-expanded="true"] { background:#f1f5f9; color:#334155; }
+        .icon-btn svg { width:20px; height:20px; }
+        .menu {
+            position:absolute; right:0; top:calc(100% + 4px); z-index:120; min-width:240px; max-width:calc(100vw - 2rem); background:#fff; border:1px solid #e2e8f0;
+            border-radius:12px; box-shadow:0 12px 32px rgba(15,23,42,0.14); padding:0.375rem; display:none; text-align:left;
         }
-        .oc-dialog-backdrop.open { opacity: 1; }
-        .oc-dialog {
-            width: 100%; max-width: 400px; background: var(--surface); border-radius: 16px; padding: 1.375rem 1.375rem 1.125rem;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25); font-family: 'DM Sans', system-ui, sans-serif;
-            transform: translateY(8px) scale(0.98); transition: transform 0.15s ease;
+        .menu.open { display:block; }
+        .menu button { width:100%; display:flex; align-items:center; gap:0.625rem; min-height:44px; padding:0.5625rem 0.625rem; border:0; border-radius:8px; background:none; font:inherit; font-size:0.9375rem; text-align:left; color:#334155; cursor:pointer; }
+        .menu button:hover { background:#f1f5f9; }
+        .menu button svg { width:18px; height:18px; color:#64748b; flex-shrink:0; }
+        .menu .sep { height:1px; background:#f1f5f9; margin:0.25rem 0.375rem; }
+        .menu .danger, .menu .danger svg { color:#ef4444; }
+        .menu .ocb-t { display:flex; flex-direction:column; min-width:0; white-space:normal; line-height:1.3; }
+        .menu .ocb-t small { font-size:0.8125rem; color:#64748b; margin-top:0.125rem; }
+        .toast {
+            position:fixed; left:50%; bottom:calc(1.25rem + env(safe-area-inset-bottom, 0px)); transform:translate(-50%, calc(100% + 3rem)); visibility:hidden; z-index:10002;
+            background:#1e293b; color:#fff; border-radius:12px; padding:0.625rem 0.625rem 0.625rem 1rem;
+            display:flex; align-items:center; gap:0.875rem; font-size:0.9375rem; box-shadow:0 10px 30px rgba(15,23,42,0.25);
+            transition:transform 0.25s ease, visibility 0s 0.25s; width:max-content; max-width:calc(100% - 2rem);
         }
-        .oc-dialog-backdrop.open .oc-dialog { transform: none; }
-        .oc-dialog-msg { font-size: 0.9375rem; line-height: 1.5; color: var(--text-soft); white-space: pre-line; }
-        .oc-dialog-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
-        .oc-dialog-input {
-            width: 100%; padding: 0.6875rem 0.875rem; border: 1.5px solid var(--border); border-radius: 10px; font: inherit;
-            font-size: 1rem; color: var(--text); background: var(--bg);
-        }
-        .oc-dialog-input:focus { border-color: var(--accent-text); background: var(--surface); }
-        .oc-dialog-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
-        .oc-dialog-btn { font: inherit; font-size: 0.9375rem; font-weight: 600; min-height: 44px; padding: 0.625rem 1rem; border-radius: 10px; border: 0; cursor: pointer; }
-        .oc-dialog-cancel { background: var(--chip-bg); color: var(--text-soft); }
-        .oc-dialog-cancel:hover { background: var(--border); }
-        .oc-dialog-ok { background: #047857; color: #ffffff; }
-        .oc-dialog-ok:hover { background: #065f46; }
-        .oc-dialog-ok.danger { background: #ef4444; }
-        .oc-dialog-ok.danger:hover { background: #dc2626; }
+        .toast.show { transform:translate(-50%, 0); visibility:visible; transition:transform 0.25s ease; }
+        .toast button { color:#6ee7b7; font:inherit; font-weight:600; padding:0.25rem 0.5rem; border:0; background:none; border-radius:6px; min-height:44px; flex-shrink:0; white-space:nowrap; cursor:pointer; }
+        #toast-text { min-width:0; overflow-wrap:normal; word-break:normal; }
+        .toast button:hover { background:rgba(255,255,255,0.08); }
+        /* venster open: de pagina erachter schuift niet mee */
+        html:has(.ocw-back) { overflow:hidden; }
     
         /* Onder Constructie: gedeelde footer en quote (huisstijl) */
         footer.oc-footer {
@@ -2041,56 +2043,6 @@
 </style>
 </head>
 <body>
-    <script>
-        /* Vervangt confirm() en prompt() door een dialoog in de pagina. Beide geven een Promise terug. */
-        function ocDialog({ message = '', label = '', value = null, okText = 'OK', danger = false }) {
-            return new Promise(resolve => {
-                const isPrompt = value !== null;
-                document.querySelectorAll('.dropdown-menu.active, .dropdown.active').forEach(d => d.classList.remove('active'));
-                const back = document.createElement('div');
-                back.className = 'oc-dialog-backdrop';
-                back.innerHTML = `<div class="oc-dialog" role="dialog" aria-modal="true">
-                    ${isPrompt ? `<label class="oc-dialog-label"></label><input class="oc-dialog-input" type="text">`
-                               : `<p class="oc-dialog-msg"></p>`}
-                    <div class="oc-dialog-actions">
-                        <button class="oc-dialog-btn oc-dialog-cancel" type="button">Annuleer</button>
-                        <button class="oc-dialog-btn oc-dialog-ok${danger ? ' danger' : ''}" type="button"></button>
-                    </div></div>`;
-                if (isPrompt) { back.querySelector('label').textContent = label; back.querySelector('input').value = value; }
-                else back.querySelector('.oc-dialog-msg').textContent = message;
-                back.querySelector('.oc-dialog-ok').textContent = okText;
-                const prev = document.activeElement;
-                document.body.appendChild(back);
-                requestAnimationFrame(() => back.classList.add('open'));
-                const input = back.querySelector('input');
-                (input || back.querySelector('.oc-dialog-ok')).focus();
-                if (input) input.select();
-                const close = result => {
-                    document.removeEventListener('keydown', onKey, true);
-                    back.remove();
-                    if (prev && prev.focus) prev.focus();
-                    resolve(result);
-                };
-                const ok = () => close(isPrompt ? input.value : true);
-                const cancel = () => close(isPrompt ? null : false);
-                function onKey(e) {
-                    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); cancel(); }
-                    if (e.key === 'Enter' && (isPrompt || document.activeElement !== back.querySelector('.oc-dialog-cancel'))) { e.preventDefault(); e.stopPropagation(); ok(); }
-                }
-                document.addEventListener('keydown', onKey, true);
-                back.querySelector('.oc-dialog-ok').addEventListener('click', ok);
-                back.querySelector('.oc-dialog-cancel').addEventListener('click', cancel);
-                back.addEventListener('click', e => { if (e.target === back) cancel(); });
-            });
-        }
-        function ocConfirm(message, opts = {}) {
-            const danger = /verwijder|wissen/i.test(message);
-            return ocDialog({ message, danger, okText: opts.ok || (danger ? (/wissen/i.test(message) ? 'Wis alles' : 'Verwijder') : 'OK') });
-        }
-        function ocPrompt(label, value = '') {
-            return ocDialog({ label: label.replace(/:\s*$/, ''), value: value == null ? '' : String(value), okText: 'Bewaar' });
-        }
-    </script>
 
     <div class="app">
         <!-- Header Banner -->
@@ -2179,6 +2131,17 @@
                 <button class="nav-btn active" data-view="meditate" aria-pressed="true">Mediteer</button>
                 <button class="nav-btn" data-view="calendar" aria-pressed="false">Kalender</button>
             </nav>
+            <div class="menu-wrap">
+                <button type="button" class="icon-btn" id="menu-btn" aria-label="Meer acties" aria-haspopup="true" aria-expanded="false" aria-controls="menu">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
+                </button>
+                <div class="menu" id="menu" role="menu" aria-label="Meer acties">
+                    <button type="button" data-bestand="bewaar" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 11v6M9 14l3 3 3-3"/></svg><span class="ocb-t">Bewaar als bestand<small>Om later verder te werken, of op een ander toestel</small></span></button>
+                    <button type="button" data-bestand="open" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 10v6M9 13l3-3 3 3"/></svg>Open bestand</button>
+                    <div class="sep" role="separator"></div>
+                    <button type="button" data-act="wipe" class="danger" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>Alles wissen</button>
+                </div>
+            </div>
         </div>
 
         <!-- Meditate View -->
@@ -2296,9 +2259,6 @@
                 <div class="calendar-header">
                     <h2 class="calendar-title" id="calendar-title">Januari 2026</h2>
                     <div class="calendar-actions">
-                        <button class="btn-icon-small" id="clear-data" title="Alles wissen en opnieuw beginnen" aria-label="Alles wissen en opnieuw beginnen">
-                            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                        </button>
                         <div class="calendar-nav">
                             <button id="prev-month" aria-label="Vorige maand">
                                 <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
@@ -2474,6 +2434,9 @@
         </div>
     </div>
 
+    <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-text"></span><button type="button" id="toast-btn" hidden>Ongedaan</button></div>
+    <input type="file" id="oc-bestand-in" accept=".json,application/json" hidden aria-label="Bestand kiezen om te openen">
+
     <footer class="footer oc-footer">
         <p class="quote oc-quote">Mildheid begint bij jezelf.</p>
         <p class="oc-medisch" style="font-size:0.75rem;color:#64748b;margin:0.5rem auto 0;max-width:30rem;line-height:1.5;text-align:center">Dit is geen medische behandeling of diagnose. Heb je klachten, zoek dan hulp via je huisarts of een psycholoog. Is het dringend? Bel 112.</p>
@@ -2520,7 +2483,9 @@
         function load(k, d) {
             try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; }
         }
+        let ocSaves = 0;   // telt bewaringen: 'Ongedaan' kan alleen zolang er sindsdien niets bewaard werd
         function save(k, v) {
+            ocSaves++;
             try { localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); return true; } catch (e) { return false; }
         }
         function esc(str) {
@@ -2531,17 +2496,23 @@
         // Zacht standaardritme: korte pauze, lange uitademing. Vasthouden kan hooguit 6 seconden.
         const DEFAULT_BREATH = { inhale: 4, hold: 2, exhale: 6 };
         const MAX_HOLD = 6;
-        const rawBreath = load('lk_breath', null);
-        const savedBreath = (rawBreath && typeof rawBreath === 'object') ? {
-            inhale: clampInt(rawBreath.inhale, 2, 10, DEFAULT_BREATH.inhale),
-            hold: clampInt(rawBreath.hold, 0, MAX_HOLD, DEFAULT_BREATH.hold),
-            exhale: clampInt(rawBreath.exhale, 2, 12, DEFAULT_BREATH.exhale)
-        } : DEFAULT_BREATH;
-        const rawEntries = load('lk_entries', []);
-        const savedEntries = (Array.isArray(rawEntries) ? rawEntries : []).filter(e =>
-            e && typeof e === 'object' && Number.isInteger(e.mood) && e.mood >= 1 && e.mood <= 5 &&
-            typeof e.date === 'string' && !isNaN(new Date(e.date).getTime())
-        ).map(e => ({ ...e, recipient: typeof e.recipient === 'string' ? e.recipient.slice(0, 40) : 'ik' }));
+        function readBreath() {
+            const rawBreath = load('lk_breath', null);
+            return (rawBreath && typeof rawBreath === 'object') ? {
+                inhale: clampInt(rawBreath.inhale, 2, 10, DEFAULT_BREATH.inhale),
+                hold: clampInt(rawBreath.hold, 0, MAX_HOLD, DEFAULT_BREATH.hold),
+                exhale: clampInt(rawBreath.exhale, 2, 12, DEFAULT_BREATH.exhale)
+            } : { ...DEFAULT_BREATH };
+        }
+        function readEntries() {
+            const rawEntries = load('lk_entries', []);
+            return (Array.isArray(rawEntries) ? rawEntries : []).filter(e =>
+                e && typeof e === 'object' && Number.isInteger(e.mood) && e.mood >= 1 && e.mood <= 5 &&
+                typeof e.date === 'string' && !isNaN(new Date(e.date).getTime())
+            ).map(e => ({ ...e, recipient: typeof e.recipient === 'string' ? e.recipient.slice(0, 40) : 'ik' }));
+        }
+        const savedBreath = readBreath();
+        const savedEntries = readEntries();
 
         const STATE = {
             entries: savedEntries,
@@ -3203,13 +3174,29 @@
         $('modal-close').addEventListener('click', () => $('day-modal').classList.remove('visible'));
         $('day-modal-close').addEventListener('click', () => $('day-modal').classList.remove('visible'));
 
-        // Clear data
-        $('clear-data').addEventListener('click', async () => {
-            if (await ocConfirm('Alles wissen en opnieuw beginnen? Je sessies, je ademinstellingen en je akkoord met de lokale opslag worden verwijderd. Dit kan niet ongedaan worden gemaakt.')) {
-                ['lk_entries', 'lk_breath', 'lk_privacy_accepted'].forEach(k => { try { localStorage.removeItem(k); } catch {} });
-                location.reload();
-            }
-        });
+        // Alles wissen (⋮-menu): met bevestiging, en nog ongedaan te maken tot er iets anders bewaard wordt
+        const HART_KEYS = ['lk_entries', 'lk_breath', 'lk_privacy_accepted'];
+        function hartRefresh() {
+            STATE.entries = readEntries();
+            STATE.breath = readBreath();
+            renderCalendar();
+            updateStats();
+        }
+        async function ocWipeAll() {
+            const heeftIets = HART_KEYS.some(k => { try { return localStorage.getItem(k) !== null; } catch (e) { return false; } });
+            if (!heeftIets && !STATE.entries.length) { toast('Er is nog niets om te wissen'); return; }
+            if (!await ocConfirm(`Alles wissen in ${OC_TOOL}?`, 'Je sessies en je ademritme verdwijnen. Je kan dit nog ongedaan maken tot je iets anders doet.', 'Alles wissen')) return;
+            const copy = {};
+            HART_KEYS.forEach(k => { try { const v = localStorage.getItem(k); if (v !== null) copy[k] = v; } catch (e) {} });
+            HART_KEYS.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+            hartRefresh();
+            toast('Alles gewist', ocUndoable(() => {
+                Object.keys(copy).forEach(k => { try { localStorage.setItem(k, copy[k]); } catch (e) {} });
+                hartRefresh();
+                setTimeout(() => toast('Teruggezet'), 60);
+            }));
+        }
+        document.addEventListener('click', e => { if (e.target.closest('[data-act="wipe"]')) ocWipeAll(); });
 
         function updateStats() {
             $('stat-total').textContent = STATE.entries.length;
@@ -3778,6 +3765,188 @@
         // Init: de kalender is pas zichtbaar na een tik op 'Kalender'; we tekenen hem als de gsm even niets te doen heeft
         (window.requestIdleCallback || (f => setTimeout(f, 300)))(() => { renderCalendar(); updateStats(); });
     </script>
+<script>
+/* ---------- Gedeeld: melding, bevestiging en Ongedaan (zoals in de andere tools) ---------- */
+const OC_TOOL = 'Hartmeditatie';
+let undoFn = null, toastTimer = null;
+function toast(msg, undo) {
+  undoFn = undo || null;
+  $('toast-text').textContent = msg;
+  $('toast-btn').hidden = !undo;
+  $('toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { $('toast').classList.remove('show'); undoFn = null; }, undo ? 6000 : 2500);
+}
+$('toast-btn').addEventListener('click', () => {
+  const f = undoFn; undoFn = null;
+  $('toast').classList.remove('show');
+  if (f) f();
+});
+// Bevestiging in de pagina (geen pop-up van de browser).
+// Stijl van de bevestiging en de knoppen 'Overnemen uit…': meteen laden.
+function ocStyle() {
+  if (!document.getElementById('ocw-style')) {
+    const s = document.createElement('style'); s.id = 'ocw-style';
+    s.textContent = `.ocw-back{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);font-family:'DM Sans',system-ui,sans-serif}
+      .ocw{width:100%;max-width:400px;background:#fff;border-radius:16px;padding:1.375rem 1.375rem 1.125rem;box-shadow:0 20px 50px rgba(15,23,42,.25);color:#1e293b}
+      .ocw b{display:block;font-size:1.0625rem;letter-spacing:-.01em;margin-bottom:.375rem}
+      .ocw p{font-size:.9375rem;line-height:1.5;color:#475569}
+      .ocw-row{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.25rem}
+      .ocw-row button{font:inherit;font-size:.9375rem;font-weight:600;padding:.625rem 1rem;min-height:44px;border-radius:10px;border:0;cursor:pointer}
+      .ocw-no{background:#f1f5f9;color:#475569} .ocw-yes{background:#dc2626;color:#fff} .ocw-yes:hover{background:#b91c1c}
+      .oc-import{display:inline-flex;align-items:center;gap:.375rem;font:inherit;font-size:.8125rem;font-weight:600;color:#059669;background:#fff;border:1px dashed #a7f3d0;border-radius:999px;padding:.3125rem .75rem;cursor:pointer;white-space:nowrap}
+      .oc-import:hover{background:#ecfdf5;border-color:#10b981} .oc-import svg{width:15px;height:15px} .oc-import[hidden]{display:none}`;
+    document.head.appendChild(s);
+  }
+}
+ocStyle();
+function ocConfirm(title, text, okText) {
+  return new Promise(resolve => {
+    const back = document.createElement('div'); back.className = 'ocw-back';
+    back.innerHTML = '<div class="ocw" role="alertdialog" aria-modal="true"><b></b><p></p><div class="ocw-row"><button class="ocw-no" type="button">Annuleer</button><button class="ocw-yes" type="button"></button></div></div>';
+    back.querySelector('b').textContent = title; back.querySelector('p').textContent = text; back.querySelector('.ocw-yes').textContent = okText;
+    document.body.appendChild(back);
+    const done = v => { document.removeEventListener('keydown', key, true); back.remove(); resolve(v); };
+    const key = e => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(false); } };
+    document.addEventListener('keydown', key, true);
+    back.querySelector('.ocw-no').onclick = () => done(false);
+    back.querySelector('.ocw-yes').onclick = () => done(true);
+    back.addEventListener('click', e => { if (e.target === back) done(false); });
+    back.querySelector('.ocw-no').focus();
+  });
+}
+// Ongedaan maken van een wisbeurt kan alleen zolang er sindsdien niets anders bewaard werd.
+function ocUndoable(restore) {
+  const mark = ocSaves;
+  return () => {
+    if (ocSaves !== mark) { setTimeout(() => toast('Ongedaan maken kan niet meer: er is intussen iets veranderd'), 60); return; }
+    restore();
+  };
+}
+</script>
+<script>
+/* ⋮-menu: openen met klik, tik of toets; sluiten met Escape, een klik ernaast of een keuze */
+(function () {
+  var btn = document.getElementById('menu-btn'), m = document.getElementById('menu');
+  if (!btn || !m) return;
+  function items() { return [].slice.call(m.querySelectorAll('button')).filter(function (b) { return !b.disabled && !b.hidden && b.offsetParent !== null; }); }
+  function open(kb) {
+    var t = document.getElementById('info-tooltip'); if (t) { t.classList.remove('visible'); document.getElementById('info-btn').setAttribute('aria-expanded', 'false'); }
+    m.classList.add('open'); btn.setAttribute('aria-expanded', 'true');
+    if (kb) { var f = items()[0]; if (f) f.focus(); }
+  }
+  function close(terug) {
+    if (!m.classList.contains('open')) return;
+    m.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    if (terug) btn.focus();
+  }
+  window.closeMenu = close;
+  btn.addEventListener('click', function (e) { e.stopPropagation(); if (m.classList.contains('open')) close(); else open(e.detail === 0); });
+  document.getElementById('info-btn').addEventListener('click', function () { close(); });
+  document.addEventListener('click', function (e) { if (!(e.target.closest && e.target.closest('.menu-wrap'))) close(); });
+  m.addEventListener('click', function (e) { if (e.target.closest('button')) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!m.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); return; }
+    if (e.key === 'Tab') { close(); return; }
+    if (['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(e.key) < 0) return;
+    var l = items(); if (!l.length) return;
+    var i = l.indexOf(document.activeElement); e.preventDefault();
+    i = e.key === 'Home' ? 0 : e.key === 'End' ? l.length - 1 : (i + (e.key === 'ArrowDown' ? 1 : -1) + l.length) % l.length;
+    l[i].focus();
+  }, true);
+})();
+</script>
+<script>
+/* oc-bestand: je werk in deze tool bewaren als bestand en later (of op een ander toestel) weer openen.
+   Formaat = dat van de reservekopie in de app: { app:'Onder Constructie', version:1, created, tool, data:{ sleutel: tekst } }.
+   Een reservekopie uit de app kan je hier ook openen: de tool neemt er alleen zijn eigen deel uit. */
+window.ocBestand = (function () {
+  function patronen() {
+    var m = document.querySelector('meta[name="oc:opslag"]');
+    return m ? m.content.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+  }
+  function past(k, p) { return p.slice(-1) === '*' ? k.indexOf(p.slice(0, -1)) === 0 : k === p; }
+  function eigen(k) { return patronen().some(function (p) { return past(k, p); }); }
+  function sleutels() {
+    var uit = [];
+    try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && eigen(k)) uit.push(k); } } catch (e) {}
+    return uit;
+  }
+  function naam() {
+    var m = document.querySelector('meta[name="oc:titel"]') || document.querySelector('meta[name="application-name"]');
+    return (m && m.content) || (document.title.split(/\s[–-]\s/)[0] || 'tool').trim();
+  }
+  function slug(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  /* bewaar(): downloadt het bestand. Geeft het aantal bewaarde sleutels terug (0 = niets om te bewaren). */
+  function bewaar(extraNaam) {
+    var keys = sleutels(); if (!keys.length) return 0;
+    var data = {}; keys.forEach(function (k) { try { data[k] = localStorage.getItem(k); } catch (e) {} });
+    var id = location.pathname.replace(/\/index\.html$/, '').split('/').filter(Boolean).pop() || 'tool';
+    var blob = new Blob([JSON.stringify({ app: 'Onder Constructie', version: 1, created: new Date().toISOString(), tool: id, data: data }, null, 1)], { type: 'application/json' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    var stuk = slug(naam()) + (extraNaam ? '-' + slug(extraNaam) : '');
+    a.download = stuk + '-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    return keys.length;
+  }
+  /* lees(file): Promise met { data: {sleutel: tekst} } van alleen de eigen sleutels.
+     Fout 'vorm' = geen bestand van Onder Constructie; fout 'leeg' = niets van deze tool in het bestand. */
+  function lees(file) {
+    return file.text().then(function (t) {
+      var d; try { d = JSON.parse(t); } catch (e) { throw new Error('vorm'); }
+      if (!d || d.app !== 'Onder Constructie' || typeof d.data !== 'object' || !d.data) throw new Error('vorm');
+      var uit = {}, n = 0;
+      Object.keys(d.data).forEach(function (k) { if (eigen(k) && typeof d.data[k] === 'string') { uit[k] = d.data[k]; n++; } });
+      if (!n) throw new Error('leeg');
+      return { data: uit, aantal: n, created: d.created || null };
+    });
+  }
+  /* zetTerug(gelezen): vervangt het huidige werk van deze tool door wat in het bestand staat, en laat andere tabbladen herladen. */
+  function zetTerug(g) {
+    sleutels().forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+    Object.keys(g.data).forEach(function (k) { try { localStorage.setItem(k, g.data[k]); } catch (e) {} });
+  }
+  function melding(err) {
+    return err && err.message === 'leeg' ? 'In dit bestand staat niets van ' + naam() + '.'
+      : 'Dit bestand kan ik niet openen. Kies een bestand dat je met "Bewaar als bestand" of als reservekopie maakte.';
+  }
+  return { bewaar: bewaar, lees: lees, zetTerug: zetTerug, melding: melding, sleutels: sleutels, naam: naam };
+})();
+</script>
+<script>
+/* Bewaar als bestand / Open bestand: neemt je sessies en je ademritme mee naar een ander toestel */
+(() => {
+  const heeftWerk = () => STATE.entries.length > 0 || ocBestand.sleutels().length > 0;
+  const inp = document.getElementById('oc-bestand-in');
+  // Een lange melding blijft langer staan (minstens 4,5 s): toon ze opnieuw voor ze verdwijnt.
+  const lang = msg => { toast(msg); setTimeout(() => { const t = document.getElementById('toast-text'); if (t && t.textContent === msg) toast(msg); }, 2300); };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-bestand]'); if (!b) return;
+    if (window.closeMenu) window.closeMenu();
+    if (b.dataset.bestand === 'bewaar') {
+      if (!heeftWerk() || !ocBestand.bewaar()) { toast('Er is nog niets om te bewaren.'); return; }
+      toast('Bestand gedownload');
+    } else { inp.value = ''; inp.click(); }
+  });
+  inp.addEventListener('change', async () => {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    let g; try { g = await ocBestand.lees(f); } catch (err) { lang(ocBestand.melding(err)); return; }
+    if (heeftWerk() && !await ocConfirm('Bestand openen?', 'Dit vervangt wat nu in ' + ocBestand.naam() + ' staat. Doorgaan?', 'Vervang')) return;
+    // Tot de herlaadbeurt mag niets het teruggezette werk nog overschrijven (uitgestelde bewaring, pagehide, ander tabblad).
+    const pat = (document.querySelector('meta[name="oc:opslag"]') || {}).content || '';
+    const eigen = k => pat.split(',').map(s => s.trim()).filter(Boolean).some(p => p.slice(-1) === '*' ? String(k).indexOf(p.slice(0, -1)) === 0 : k === p);
+    if (STATE.isMeditating) { try { hartEnd(); } catch (e) {} }
+    ocBestand.zetTerug(g);
+    try {
+      const set = Storage.prototype.setItem, rem = Storage.prototype.removeItem;
+      Storage.prototype.setItem = function (k, v) { if (this === localStorage && eigen(k)) return; return set.call(this, k, v); };
+      Storage.prototype.removeItem = function (k) { if (this === localStorage && eigen(k)) return; return rem.call(this, k); };
+    } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
 <script>
 /* oc-sync: reageert op "Wissen" in de app (ook in andere tabbladen) en geeft Esc door aan de app */
 (function () {
