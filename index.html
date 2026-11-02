@@ -1984,6 +1984,16 @@
             .controls { padding: 12px 24px 28px; }
         }
 
+        /* Gebruikerstest november 2026: ook op een klein gsm-scherm staat Start in beeld */
+        @media (max-width: 640px) and (max-height: 760px) {
+            .meditation-stage { padding-top: 14px; padding-bottom: 0; }
+            .breath-circle { zoom: 0.62; margin-bottom: 4px; }
+            .intention-display { min-height: 44px; }
+            .progress-dots { margin-top: 0; }
+            .recipient-section { margin-top: 4px; }
+            .controls { padding-top: 6px; }
+        }
+
         /* Donkere modus: rustig donker slate, groen accent */
         
 
@@ -2285,7 +2295,7 @@
 
                 <!-- Heatmap legend -->
                 <div class="heatmap-legend">
-                    <span class="legend-label">Stemming:</span>
+                    <span class="legend-label">Stemming: zwaar</span>
                     <div class="legend-scale">
                         <div class="legend-box" style="background: var(--mood-1);" title="Zwaar"></div>
                         <div class="legend-box" style="background: var(--mood-2);"></div>
@@ -2293,7 +2303,7 @@
                         <div class="legend-box" style="background: var(--mood-4);"></div>
                         <div class="legend-box" style="background: var(--mood-5);" title="Stralend"></div>
                     </div>
-                    <span class="legend-label">Stralend</span>
+                    <span class="legend-label">stralend</span>
                 </div>
 
                 <div class="stats">
