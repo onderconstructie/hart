@@ -2185,7 +2185,7 @@
 
                     <div class="intention-display">
                         <p class="intention-text visible" id="intention-text" aria-live="polite">
-                            Dat ik <span class="keyword">rust</span> mag vinden
+                            Dat ik me <span class="keyword">veilig</span> mag voelen
                         </p>
                     </div>
 
@@ -2548,17 +2548,17 @@
         function getIntentions(recipient) {
             if (recipient === 'ik') {
                 return [
-                    { text: 'Dat ik <span class="keyword">rust</span> mag vinden' },
-                    { text: 'Dat ik <span class="keyword">mild</span> mag zijn voor mezelf' },
-                    { text: 'Dat ik me <span class="keyword">gesteund</span> mag voelen' },
-                    { text: 'Dat ik met <span class="keyword">vertrouwen</span> verder mag' }
+                    { text: 'Dat ik me <span class="keyword">veilig</span> mag voelen' },
+                    { text: 'Dat ik me <span class="keyword">gelukkig</span> mag voelen' },
+                    { text: 'Dat ik me <span class="keyword">gezond</span> mag voelen' },
+                    { text: 'Dat ik met <span class="keyword">gemak</span> mag leven' }
                 ];
             } else {
                 return [
-                    { text: `Dat ${esc(recipient)} <span class="keyword">rust</span> mag vinden` },
-                    { text: `Dat ${esc(recipient)} <span class="keyword">mild</span> mag zijn voor zichzelf` },
-                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gesteund</span> mag voelen` },
-                    { text: `Dat ${esc(recipient)} met <span class="keyword">vertrouwen</span> verder mag` }
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">veilig</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gelukkig</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} zich <span class="keyword">gezond</span> mag voelen` },
+                    { text: `Dat ${esc(recipient)} met <span class="keyword">gemak</span> mag leven` }
                 ];
             }
         }
